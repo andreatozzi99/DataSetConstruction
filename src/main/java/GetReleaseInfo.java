@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
-public class getReleaseInfo {
+public class GetReleaseInfo {
 	public static HashMap<LocalDateTime, String> releaseNames;
 	public static HashMap<LocalDateTime, String> releaseID;
 	public static ArrayList<LocalDateTime> releases;
@@ -77,8 +77,7 @@ public class getReleaseInfo {
 				e.fillInStackTrace();
 			}
 		}
-		return;
-	}
+    }
 	// Aggiunge una release all ArrayList
 	public static void addRelease(String strDate, String name, String id) {
 		LocalDate date = LocalDate.parse(strDate);
@@ -87,15 +86,13 @@ public class getReleaseInfo {
 			releases.add(dateTime);
 		releaseNames.put(dateTime, name);
 		releaseID.put(dateTime, id);
-		return;
-	}
+    }
 	// Legge un JSONObject da un URL
 	public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
         try (InputStream is = new URL(url).openStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String jsonText = readAll(rd);
-            JSONObject json = new JSONObject(jsonText);
-            return json;
+            return new JSONObject(jsonText);
         }
 	}
 	// Legge tutti i dati da un Reader e li restituisce come stringa
