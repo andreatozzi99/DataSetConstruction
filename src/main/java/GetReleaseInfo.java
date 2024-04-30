@@ -20,7 +20,7 @@ public class GetReleaseInfo {
 	public static Integer numVersions;
 
 	public static void main(String[] args) throws IOException, JSONException {
-		String projName ="BOOKKEEPER";
+		String projName = Config.PROJECT_NAME;
 		// Riempie l'ArrayList con le date delle release e le ordina
 		// Ignora le release con date mancanti
 		releases = new ArrayList<>();
@@ -50,7 +50,7 @@ public class GetReleaseInfo {
 			return;
 		FileWriter fileWriter = null;
 		try {
-			String outName = projName + "VersionInfo.csv"; // Nome del file CSV per l'output
+			String outName = Config.VERSION_CSV_PATH; // Nome del file CSV per l'output
 			fileWriter = new FileWriter(outName);
 			fileWriter.append("Index,Version ID,Version Name,Date");
 			fileWriter.append("\n");

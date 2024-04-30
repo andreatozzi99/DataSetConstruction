@@ -15,8 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GetLOCForVersions {
     public static void main(String[] args) throws IOException, GitAPIException {
-        String repositoryPath = "C:/Users/andre/Desktop/bookkeeper";
-        String csvFilePath = "./BOOKKEEPERVersionInfo.csv";
+        String repositoryPath = Config.REPOSITORY_PATH;
+        String csvFilePath = Config.VERSION_CSV_PATH;
         List<VersionInfo> versions = readVersionsFromCSV(csvFilePath);
 
         if (!versions.isEmpty()) {
@@ -60,7 +60,7 @@ public class GetLOCForVersions {
     private static boolean checkoutVersion(String repositoryPath, String versionName) {
         try (Repository repository = new FileRepositoryBuilder().setGitDir(new File(repositoryPath + "/.git")).build();
              Git git = new Git(repository)) {
-            git.checkout().setName("release-"+versionName).call();
+            git.checkout().setName(Config.TAG_FORMAT+versionName).call();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,10 +103,10 @@ public class GetLOCForVersions {
     }
 
     private static void writeLOCDataToCSV(String versionIndex, List<LOCData> locDataList) throws IOException {
-        String csvFilePath = "./Data-Set.csv";
+        String csvFilePath = Config.DATA_SET_CSV_PATH;
         try (FileWriter writer = new FileWriter(csvFilePath, true)) {
             if (new File(csvFilePath).length() == 0) {
-                writer.append("Version,Class Name,LOC\n");
+                writer.append(Config.DATA_SET_CSV_HEADER +"\n");
             }
             for (LOCData locData : locDataList) {
                 writer.append(versionIndex).append(",").append(locData.getFileName()).append(",").append(String.valueOf(locData.getLoc())).append("\n");

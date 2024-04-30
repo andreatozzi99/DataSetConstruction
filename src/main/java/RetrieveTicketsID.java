@@ -35,7 +35,7 @@ class RetrieveTicketsID {
 
     public static void main(String[] args) throws IOException, JSONException {
         // Nome del progetto
-        String projName ="BOOKKEEPER";
+        String projName = Config.PROJECT_NAME;
         Integer j, i = 0;
         // Ottieni dati JSON per i bug chiusi con AV nel progetto
         int total;
@@ -52,9 +52,17 @@ class RetrieveTicketsID {
             // Itera su ogni bug
             for (; i < total && i < j; i++) {
                 String key = issues.getJSONObject(i%1000).get("key").toString();
-                System.out.println(key);
-                // ------ Salvataggio su file csv --------
-
+                // Crea file csv e inserisci su ogni riga l'ID del ticket
+                try {
+                    FileWriter fileWriter = new FileWriter(Config.TICKET_CSV_PATH, true);
+                    fileWriter.append(key);
+                    fileWriter.append("\n");
+                    fileWriter.flush();
+                    fileWriter.close();
+                } catch (Exception e) {
+                    System.out.println("Errore nella scrittura del CSV");
+                    e.fillInStackTrace();
+                }
             }
         } while (i < total);
     }
