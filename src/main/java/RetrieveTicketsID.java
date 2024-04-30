@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-// Classe per recuperare gli ID dei ticket
+// Classe per recuperare gli ID dei ticket di tipo BUG
 class RetrieveTicketsID {
     // Metodo privato per leggere tutti i dati da un Reader e restituirli come stringa
     private static String readAll(Reader rd) throws IOException {
@@ -53,6 +53,8 @@ class RetrieveTicketsID {
             for (; i < total && i < j; i++) {
                 String key = issues.getJSONObject(i%1000).get("key").toString();
                 System.out.println(key);
+                // ------ Salvataggio su file csv --------
+
             }
         } while (i < total);
     }

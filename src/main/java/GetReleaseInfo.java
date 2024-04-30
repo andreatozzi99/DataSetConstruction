@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
+// Classe utilizzata per recuperare informazioni sulle versioni (Che sembrano corrispondere alle Release)
+//
 public class GetReleaseInfo {
 	public static HashMap<LocalDateTime, String> releaseNames;
 	public static HashMap<LocalDateTime, String> releaseID;
@@ -44,7 +46,7 @@ public class GetReleaseInfo {
                 return o1.compareTo(o2);
             }
         });
-		if (releases.size() < 6)
+		if (releases.size() < 6) // Se ci sono meno di 6 release, non viene scritto il file
 			return;
 		FileWriter fileWriter = null;
 		try {
