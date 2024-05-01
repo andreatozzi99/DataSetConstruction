@@ -17,6 +17,10 @@ public class GetLOCForVersions {
     public static void main(String[] args) throws IOException, GitAPIException {
         String repositoryPath = Config.REPOSITORY_PATH;
         String csvFilePath = Config.VERSION_CSV_PATH;
+        File file = new File(Config.DATA_SET_CSV_PATH);
+        if (file.exists()){
+            file.delete();
+        }
         List<VersionInfo> versions = readVersionsFromCSV(csvFilePath);
 
         if (!versions.isEmpty()) {
@@ -25,6 +29,7 @@ public class GetLOCForVersions {
                 System.out.println("Check-Out Version: " + version.getVersionName());
                 if (!checkoutVersion(repositoryPath, version.getVersionName())) {
                     System.out.println("Errore durante il checkout della versione: " + version.getVersionName());
+                    versionIndex++;
                     continue;
                 }
                 getLOCForVersionAndWriteToCSV(repositoryPath, String.valueOf(versionIndex));

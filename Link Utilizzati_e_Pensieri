@@ -1,0 +1,14 @@
+Link al json di jira con i bug risolti e chiusi:
+https://issues.apache.org/jira/rest/api/2/search?jql=project=%22BOOKKEEPER%22AND%22issueType%22=%22Bug%22AND(%22status%22=%22closed%22OR%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22&fields=key,resolutiondate,versions,created&startAt=0&maxResults=1000
+
+Link Ticket di Jira:
+https://issues.apache.org/jira/browse/BOOKKEEPER-1105?jql=project%20%3D%20BOOKKEEPER%20AND%20issuetype%20%3D%20Bug%20AND%20status%20in%20(Resolved%2C%20Closed)%20AND%20resolution%20%3D%20Fixed
+
+Caso interessante: Ticket BOOKKEEPER-854, CI SONO DUE FIX VERSIONS, 4.3.1 e 4.4.0, UNA LEGATA ALLA DATA DI RISOLUZIONE E L'ALTRA ALLA DATA DI CHIUSURA
+
+Caso interessante: Ticket BOOKKEEPER-1105, CI SONO DUE FIX VERSIONS, 4.5.1 e 4.6.0, MA LA DATA DI RISOLUZIONE E' ANCHE L'ULTIMO AGGIORNAMENTO DEL TICKET, IL TICKET NON E' STATO CHIUSO
+
+Link per API rest di Jira, ma ho tolto i ticket con FIX VERSION VUOTA: devo partire da questo?
+https://issues.apache.org/jira/rest/api/2/search?jql=project=%22BOOKKEEPER%22AND%22issueType%22=%22Bug%22AND(%22status%22=%22closed%22OR%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22%20AND%20fixVersion%20is%20not%20EMPTY&fields=key,resolutiondate,versions,created&startAt=0&maxResults=1000
+
+PERCHE' FV JIRA E FV CALCOLATA CON LE DATE NON CORRISPONDONO?
