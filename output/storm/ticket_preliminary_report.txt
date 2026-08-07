@@ -1,0 +1,6 @@
+Ticket Fixed analizzati: 1193
+Con AV: 745
+Con FV Jira: 1146
+Con almeno un fixing commit: 1086
+Con IV trovata da SZZ: 0
+Analizzabili da SZZ: 752

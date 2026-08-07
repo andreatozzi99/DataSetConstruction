@@ -7,7 +7,12 @@
     <groupId>org.example</groupId>
     <artifactId>GetTicketID</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <repositories>
+        <repository>
+            <id>jgit-repository</id>
+            <url>https://repo.eclipse.org/content/groups/releases/</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -33,7 +38,6 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>2.0.0-alpha5</version> <!-- Versione più recente disponibile -->
         </dependency>
-
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -52,5 +56,20 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+
+    <!--
+        Permette di avviare le classi della pipeline senza costruire a mano il
+        classpath delle dipendenze. Esempio:
+        mvn compile exec:java -Dexec.mainClass=manager.releaseManager.ReleaseCollector
+    -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
