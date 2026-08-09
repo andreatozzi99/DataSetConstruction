@@ -10,31 +10,33 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Individua tutte le classi Java presenti nella release corrente.
+ * Cerca i file Java presenti nella repository della release corrente.
  */
 public final class JavaClassScanner {
 
     /**
-     * Restituisce tutti i file .java presenti nella repository.
+     * Restituisce tutti i file Java presenti nella repository.
      */
     public List<Path> findJavaFiles(Path repositoryPath) {
 
-        try (Stream<Path> stream = Files.walk(repositoryPath)) {
+        try (Stream<Path> files = Files.walk(repositoryPath)) {
 
-            return stream
+            return files
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".java"))
+                    .filter(path -> Config.INCLUDE_TESTS || !isTestFile(path))
                     .sorted(Comparator.naturalOrder())
                     .toList();
 
-        } catch (IOException e) {
+        } catch (IOException exception) {
             throw new IllegalStateException(
-                    "Errore durante la scansione della repository.", e);
+                    "Errore durante la scansione della repository.",
+                    exception);
         }
     }
 
     /**
-     * Restituisce il nome della classe nel formato scelto nel Config.
+     * Restituisce il percorso della classe relativo alla repository.
      */
     public String getClassName(Path repositoryPath, Path javaFile) {
 
@@ -50,18 +52,24 @@ public final class JavaClassScanner {
         };
     }
 
-    /**
-     * Rimuove la parte iniziale del repository fino alla cartella del package.
-     * Se non viene trovata "src", restituisce comunque il percorso relativo.
-     */
-    private String buildPackageRelative(Path repositoryPath, Path javaFile) {
+    private boolean isTestFile(Path path) {
+
+        String normalized =
+                path.toString().replace('\\', '/');
+
+        return normalized.contains("/src/test/");
+    }
+
+    private String buildPackageRelative(
+            Path repositoryPath,
+            Path javaFile) {
 
         Path relative = repositoryPath.relativize(javaFile);
 
         int srcIndex = -1;
 
         for (int i = 0; i < relative.getNameCount(); i++) {
-            if (relative.getName(i).toString().equals("src")) {
+            if ("src".equals(relative.getName(i).toString())) {
                 srcIndex = i;
                 break;
             }
@@ -71,17 +79,12 @@ public final class JavaClassScanner {
             return relative.toString().replace('\\', '/');
         }
 
-        /*
-         * salta:
-         * src
-         * main / jvm / test / java ...
-         */
-
-        int start = Math.min(srcIndex + 3, relative.getNameCount() - 1);
+        int start = Math.min(
+                srcIndex + 3,
+                relative.getNameCount() - 1);
 
         return relative.subpath(start, relative.getNameCount())
                 .toString()
                 .replace('\\', '/');
     }
-
 }

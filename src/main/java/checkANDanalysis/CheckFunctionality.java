@@ -1,13 +1,19 @@
 package checkANDanalysis;
 
+import com.github.mauricioaniche.ck.CKClassResult;
 import config.Config;
 import manager.javaClassScannerManager.JavaClassScanner;
+import manager.metricsManager.CKMetrics;
+import manager.metricsManager.ClassMetricsCollector;
 import manager.checkoutManager.CheckoutManager;
-import manager.commitManager.TicketCommitFinder;
+import manager.commitManager.CommitManager;
 import manager.ticketManager.TicketManager;
 import manager.releaseManager.ReleaseManager;
+import model.ClassChanges;
+import model.CsvRow;
 import model.Ticket;
 import model.Release;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -41,15 +47,24 @@ public final class CheckFunctionality {
         checkJavaScanner();
 
         testScannerOnAllTrainingReleases();
-        */
 
+        testClassMetricsCollector();
+
+        checkCK();
+
+        checkClassChanges();
+
+        checkReleaseCommit();
+        */
+        checkJGitChanges();
     }
+
     public static void primaryAnalysis(String[] args) throws Exception {
         boolean runSzz = java.util.Arrays.asList(args).contains("--with-szz");
         TicketManager ticketManager = new TicketManager();
         List<Ticket> fixedTickets = ticketManager.getTickets();
         fixedTickets = ticketManager.getFixedTickets();
-        TicketCommitFinder finder = new TicketCommitFinder();
+        CommitManager finder = new CommitManager();
         List<Release> releases = new ReleaseManager().getReleases();
         Map<String, List<RevCommit>> commitsByTicket = finder.findFixCommits(fixedTickets.stream().map(Ticket::key)
                 .collect(java.util.stream.Collectors.toSet()));
@@ -63,27 +78,33 @@ public final class CheckFunctionality {
         try (Repository repository = runSzz ? new FileRepositoryBuilder().setGitDir(Config.REPOSITORY.resolve(".git").toFile()).build() : null) {
             SzzAnalyzer szz = new SzzAnalyzer(repository);
             for (Ticket ticket : fixedTickets) {
-            boolean hasAv = !ticket.affectedVersions().isEmpty();
-            boolean hasFv = !ticket.fixVersions().isEmpty();
-            List<RevCommit> commits = commitsByTicket.get(ticket.key());
-            Set<String> classes = finder.findTouchedJavaClasses(commits);
-            Set<RevCommit> inducing = new LinkedHashSet<>();
-            Optional<Release> injectedVersion = Optional.empty();
-            if (runSzz) {
-                for (RevCommit fix : commits) for (Set<RevCommit> found : szz.findInducingCommits(fix).values()) inducing.addAll(found);
-                injectedVersion = inducing.stream().map(commit -> szz.findInjectedVersion(commit, releases))
-                        .flatMap(Optional::stream).min(java.util.Comparator.comparing(Release::releaseDate));
-            }
-            boolean eligible = !classes.isEmpty();
-            if (hasAv) withAv++; if (hasFv) withFv++; if (!commits.isEmpty()) withCommit++; if (eligible) szzEligible++; if (injectedVersion.isPresent()) withIv++;
-            String note = classes.isEmpty() ? "nessuna classe Java nei fixing commit" : (!runSzz ? "SZZ non eseguito: avvia con --with-szz" : (injectedVersion.isEmpty() ? "SZZ non ha trovato un commit introducente" : "pronto per labeling [IV,FV)"));
-            csv.append(q(ticket.key())).append(',').append(hasAv).append(',').append(q(String.join("|", ticket.affectedVersions()))).append(',')
-                    .append(hasFv).append(',').append(q(String.join("|", ticket.fixVersions()))).append(',')
-                    .append(commits.size()).append(',').append(classes.size()).append(',').append(q(String.join("|", classes))).append(',').append(inducing.size()).append(',')
-                    .append(injectedVersion.isPresent()).append(',').append(q(injectedVersion.map(Release::name).orElse(""))).append(',')
-                    .append(eligible).append(',').append(q(note)).append('\n');
-            processed++;
-            if (processed % 25 == 0) System.out.println("Analizzati ticket: " + processed + "/" + fixedTickets.size());
+                boolean hasAv = !ticket.affectedVersions().isEmpty();
+                boolean hasFv = !ticket.fixVersions().isEmpty();
+                List<RevCommit> commits = commitsByTicket.get(ticket.key());
+                Set<String> classes = finder.findTouchedJavaClasses(commits);
+                Set<RevCommit> inducing = new LinkedHashSet<>();
+                Optional<Release> injectedVersion = Optional.empty();
+                if (runSzz) {
+                    for (RevCommit fix : commits)
+                        for (Set<RevCommit> found : szz.findInducingCommits(fix).values()) inducing.addAll(found);
+                    injectedVersion = inducing.stream().map(commit -> szz.findInjectedVersion(commit, releases))
+                            .flatMap(Optional::stream).min(java.util.Comparator.comparing(Release::releaseDate));
+                }
+                boolean eligible = !classes.isEmpty();
+                if (hasAv) withAv++;
+                if (hasFv) withFv++;
+                if (!commits.isEmpty()) withCommit++;
+                if (eligible) szzEligible++;
+                if (injectedVersion.isPresent()) withIv++;
+                String note = classes.isEmpty() ? "nessuna classe Java nei fixing commit" : (!runSzz ? "SZZ non eseguito: avvia con --with-szz" : (injectedVersion.isEmpty() ? "SZZ non ha trovato un commit introducente" : "pronto per labeling [IV,FV)"));
+                csv.append(q(ticket.key())).append(',').append(hasAv).append(',').append(q(String.join("|", ticket.affectedVersions()))).append(',')
+                        .append(hasFv).append(',').append(q(String.join("|", ticket.fixVersions()))).append(',')
+                        .append(commits.size()).append(',').append(classes.size()).append(',').append(q(String.join("|", classes))).append(',').append(inducing.size()).append(',')
+                        .append(injectedVersion.isPresent()).append(',').append(q(injectedVersion.map(Release::name).orElse(""))).append(',')
+                        .append(eligible).append(',').append(q(note)).append('\n');
+                processed++;
+                if (processed % 25 == 0)
+                    System.out.println("Analizzati ticket: " + processed + "/" + fixedTickets.size());
             }
         }
         Files.writeString(Config.TICKET_ANALYSIS_CSV, csv, StandardCharsets.UTF_8);
@@ -92,7 +113,10 @@ public final class CheckFunctionality {
         Files.writeString(Config.TICKET_ANALYSIS_REPORT, report, StandardCharsets.UTF_8);
         System.out.println(report);
     }
-    private static String q(String value) { return '"' + value.replace("\"", "\"\"") + '"'; }
+
+    private static String q(String value) {
+        return '"' + value.replace("\"", "\"\"") + '"';
+    }
 
     public static void checkReleaseRetrieval() throws Exception {
 
@@ -110,6 +134,7 @@ public final class CheckFunctionality {
         releaseManager.generateReleaseCsv(releases);
 
     }
+
     public static void checkCheckout() throws Exception {
 
         ReleaseManager releaseManager = new ReleaseManager();
@@ -208,4 +233,77 @@ public final class CheckFunctionality {
 
         checkoutManager.cleanRepository();
     }
+
+    public static void checkReleaseCommit() throws Exception {
+
+        ReleaseManager releaseManager = new ReleaseManager();
+        CheckoutManager checkoutManager = new CheckoutManager();
+
+        List<Release> releases =
+                releaseManager.getReleases();
+
+        Release release = releases.get(0);
+
+        RevCommit commit =
+                checkoutManager.getReleaseCommit(release);
+
+        System.out.println("=== RELEASE COMMIT ===");
+        System.out.println("Release: " + release.name());
+        System.out.println("Data: " + release.releaseDate());
+        System.out.println("Commit: " + commit.getName());
+        System.out.println("Messaggio: " + commit.getShortMessage());
+    }
+
+    public static void checkJGitChanges() throws Exception {
+
+        ReleaseManager releaseManager =
+                new ReleaseManager();
+
+        CheckoutManager checkoutManager =
+                new CheckoutManager();
+
+        JavaClassScanner scanner =
+                new JavaClassScanner();
+
+        CKMetrics ckMetrics =
+                new CKMetrics();
+
+        CommitManager commitManager =
+                new CommitManager();
+
+        ClassMetricsCollector collector =
+                new ClassMetricsCollector(
+                        checkoutManager,
+                        scanner,
+                        ckMetrics,
+                        commitManager);
+
+        Release release =
+                releaseManager
+                        .getReleases()
+                        .get(0);
+
+        List<Path> javaFiles =
+                collector.getJavaFiles(release);
+
+        System.out.println("=== JGIT CHANGES ===");
+        System.out.println("Release: " + release.name());
+        System.out.println("Java files: " + javaFiles.size());
+
+        List<ClassChanges> changes =
+                collector.collectClassChanges(
+                        release,
+                        javaFiles);
+
+        System.out.println(
+                "Class changes: " + changes.size());
+
+        for (int i = 0;
+             i < Math.min(20, changes.size());
+             i++) {
+
+            System.out.println(changes.get(i));
+        }
+    }
+
 }

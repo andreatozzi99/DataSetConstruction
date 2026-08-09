@@ -6,6 +6,8 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 
 import java.io.File;
 import java.io.IOException;
@@ -94,6 +96,36 @@ public final class CheckoutManager {
             }
         }
         return Optional.empty();
+    }
+
+    /**
+     * Restituisce il commit associato al tag della release.
+     */
+    public RevCommit getReleaseCommit(Release release) throws Exception {
+        requireRepository();
+
+        try (Repository repository = openRepository();
+             Git git = new Git(repository);
+             RevWalk walk = new RevWalk(repository)) {
+
+            String tag = findTag(git, release.name())
+                    .orElseThrow(() ->
+                            new IllegalArgumentException(
+                                    "Nessun tag trovato per la release "
+                                            + release.name()));
+
+            Ref ref = repository.findRef(tag);
+
+            if (ref == null) {
+                throw new IllegalStateException(
+                        "Riferimento Git non trovato: " + tag);
+            }
+
+            RevCommit commit =
+                    walk.parseCommit(repository.resolve(ref.getName()));
+
+            return commit;
+        }
     }
 
     public void printTags() {
