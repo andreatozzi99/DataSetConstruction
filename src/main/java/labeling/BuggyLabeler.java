@@ -4,7 +4,27 @@ import model.Release;
 import model.Ticket;
 import java.util.*;
 
-/** Conserva le classi associate a ogni release a partire dai ticket Jira elaborati. */
+/**
+ * Per ogni ticket fixed
+ trova fixing commit
+ trova classi toccate
+
+ se esiste IV da SZZ:
+ usa IV
+
+ altrimenti se esiste Affected Version:
+ usa la prima AV valida
+
+ altrimenti:
+ stima IV con Proportion Total
+
+ trova FV
+
+ per ogni release r tale che:
+ IV <= r < FV
+
+ marca buggy=true
+ per le classi coinvolte */
 public final class BuggyLabeler {
     private final Map<String, Set<String>> classesByRelease = new HashMap<>();
 

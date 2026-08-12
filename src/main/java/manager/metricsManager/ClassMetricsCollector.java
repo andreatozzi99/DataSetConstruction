@@ -2,50 +2,72 @@ package manager.metricsManager;
 
 import config.Config;
 import manager.checkoutManager.CheckoutManager;
+import manager.commitManager.CommitManager;
 import manager.javaClassScannerManager.JavaClassScanner;
 import model.CKClassMetrics;
-import model.CsvRow;
-import model.Release;
-import manager.commitManager.CommitManager;
 import model.ClassChanges;
-import org.eclipse.jgit.revwalk.RevCommit;
-
-import java.nio.file.Files;
-import java.util.Set;
+import model.CsvRow;
+import model.JGitClassMetrics;
+import model.Release;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * Costruisce le informazioni iniziali delle classi presenti in una release.
+ * Orchestratore degli estrattori di metriche.
+ *
+ * Per ogni release coordina:
+ * - checkout del codice;
+ * - individuazione delle classi Java;
+ * - metriche statiche CK;
+ * - metriche storiche Git;
+ * - code smell rilevati tramite PMD;
+ * - costruzione delle righe del dataset.
+ *
+ * La logica di calcolo delle singole metriche rimane
+ * all'interno dei rispettivi estrattori.
  */
 public final class ClassMetricsCollector {
 
     private final CheckoutManager checkoutManager;
     private final JavaClassScanner classScanner;
     private final CKMetrics ckMetrics;
-
+    private final JGitMetrics jGitMetrics;
     private final CommitManager commitManager;
+    private final PMDMetrics pmdMetrics;
 
     public ClassMetricsCollector(
-            CheckoutManager checkoutManager, JavaClassScanner classScanner, CKMetrics ckMetrics,
-            CommitManager commitManager) {
+            CheckoutManager checkoutManager,
+            JavaClassScanner classScanner,
+            CKMetrics ckMetrics,
+            CommitManager commitManager,
+            JGitMetrics jGitMetrics,
+            PMDMetrics pmdMetrics) {
 
         this.checkoutManager = checkoutManager;
         this.classScanner = classScanner;
         this.ckMetrics = ckMetrics;
         this.commitManager = commitManager;
+        this.jGitMetrics = jGitMetrics;
+        this.pmdMetrics = pmdMetrics;
     }
 
-
     /**
-     * Esegue il checkout della release, individua i file Java
-     * e calcola le metriche CK corrispondenti.
+     * Costruisce tutte le righe del dataset relative
+     * alla release indicata.
+     *
+     * Le modifiche Git vengono ricevute già estratte
+     * dal CommitManager, in modo da non rileggere
+     * la storia Git per ogni singola classe.
+     *
+     * @param release    release da analizzare
+     * @param allChanges modifiche Git delle classi fino alla release
      */
-    public List<CsvRow> collect(Release release) {
+    public List<CsvRow> collect(
+            Release release,
+            Map<String, List<ClassChanges>> allChanges) {
 
         checkoutManager.checkoutRelease(release);
 
@@ -56,28 +78,80 @@ public final class ClassMetricsCollector {
                             .getWorkingDirectory()
                             .toPath();
 
+            /*
+             * 1. Individuiamo tutte le classi Java
+             * presenti nella release.
+             */
             List<Path> javaFiles =
                     classScanner.findJavaFiles(repository);
 
-            Map<String, CKClassMetrics> metrics =
+            /*
+             * 2. Calcoliamo una sola volta le metriche CK
+             * per tutte le classi della release.
+             */
+            Map<String, CKClassMetrics> ckMetricsByPath =
                     ckMetrics.calculate(
                             repository,
                             javaFiles);
 
+            /*
+             * 3. PMD analizza le stesse classi e restituisce
+             * il numero di code smell rilevati per file.
+             */
+            Map<String, Integer> smellsByPath =
+                    pmdMetrics.calculate(javaFiles);
+            long classesWithSmells =
+                    smellsByPath.values()
+                            .stream()
+                            .filter(value -> value > 0)
+                            .count();
+
+            long totalSmells =
+                    smellsByPath.values()
+                            .stream()
+                            .mapToLong(Integer::longValue)
+                            .sum();
+
+            System.out.println(
+                    "Classi analizzate PMD: "
+                            + smellsByPath.size());
+
+            System.out.println(
+                    "Classi con almeno uno smell: "
+                            + classesWithSmells);
+
+            System.out.println(
+                    "Smell PMD totali: "
+                            + totalSmells);
+
             List<CsvRow> rows =
                     new ArrayList<>();
 
+            /*
+             * 4. Combiniamo tutte le metriche
+             * classe per classe.
+             */
             for (Path javaFile : javaFiles) {
 
+                /*
+                 * CK e PMD utilizzano il path assoluto
+                 * normalizzato come chiave.
+                 */
                 String absolutePath =
-                        javaFile.toAbsolutePath()
+                        javaFile
+                                .toAbsolutePath()
                                 .normalize()
                                 .toString();
 
-                CKClassMetrics classMetrics =
-                        metrics.get(absolutePath);
+                CKClassMetrics ck =
+                        ckMetricsByPath.get(absolutePath);
 
-                if (classMetrics == null) {
+                /*
+                 * Se CK non riesce ad analizzare una classe
+                 * non possiamo costruire una riga completa.
+                 */
+                if (ck == null) {
+
                     System.err.println(
                             "Nessuna metrica CK trovata per "
                                     + javaFile);
@@ -85,104 +159,117 @@ public final class ClassMetricsCollector {
                     continue;
                 }
 
-                String relativePath =
-                        repository
-                                .relativize(javaFile)
-                                .toString()
-                                .replace('\\', '/');
+                /*
+                 * Path che verrà scritto nel CSV.
+                 * È anche il formato utilizzato dal CommitManager
+                 * per identificare le classi nella storia Git.
+                 */
+                String classPath =
+                        classScanner.getClassName(
+                                repository,
+                                javaFile);
 
+                /*
+                 * Recuperiamo tutte le modifiche storiche
+                 * della classe fino alla release corrente.
+                 */
+                List<ClassChanges> changes =
+                        allChanges.getOrDefault(
+                                classPath,
+                                List.of());
+
+                /*
+                 * 5. Le modifiche grezze vengono aggregate
+                 * nelle feature JGit della classe.
+                 */
+                JGitClassMetrics git =
+                        jGitMetrics.calculate(
+                                changes,
+                                release.releaseDate());
+
+                /*
+                 * Se PMD non segnala violazioni per il file,
+                 * il numero di smell è zero.
+                 */
+                int nSmells =
+                        smellsByPath.getOrDefault(
+                                absolutePath,
+                                0);
+
+                /*
+                 * 6. Costruiamo la riga finale del dataset.
+                 */
                 rows.add(
                         toRow(
                                 release,
-                                relativePath,
-                                classMetrics));
+                                classPath,
+                                ck,
+                                git,
+                                nSmells));
             }
 
             return rows;
 
         } finally {
 
+            /*
+             * Il checkout è temporaneo: anche in caso
+             * di errore ripristiniamo il repository.
+             */
             checkoutManager.cleanRepository();
         }
     }
 
+    /**
+     * Combina metriche CK, metriche Git e code smell
+     * nella rappresentazione finale utilizzata dal CSV.
+     *
+     * Il campo buggy rimane inizialmente false:
+     * verrà impostato durante la fase di labeling.
+     */
     private CsvRow toRow(
             Release release,
             String classPath,
-            CKClassMetrics metrics) {
+            CKClassMetrics ck,
+            JGitClassMetrics git,
+            int nSmells) {
 
         return new CsvRow(
+
+                // Identificazione
                 Config.PROJECT_KEY,
                 release.index(),
                 release.name(),
                 classPath,
-                metrics.loc(),
+
+                // CK
+                ck.loc(),
+                ck.wmc(),
+                ck.cbo(),
+                ck.rfc(),
+                ck.lcom(),
+                ck.dit(),
+                ck.noc(),
+                ck.fanin(),
+                ck.fanout(),
+
+                // JGit
+                git.commitCount(),
+                git.fixCommitCount(),
+                git.churn(),
+                git.averageChangeSetSize(),
+                git.distinctAuthors(),
+                git.daysSinceLastChange(),
+                git.changeFrequency(),
+                git.changeCountLast90Days(),
+                git.modificationIntervalsStdDev(),
+                git.authorChangeEntropy(),
+
+                // Code smell
+                nSmells,
+
+                // Target: verrà determinato dal labeling
                 false
         );
-    }
-
-    /**
-     * Recupera la storia Git delle classi presenti nella release.
-     */
-    public List<ClassChanges> collectClassChanges(
-            Release release,
-            List<Path> javaFiles) throws Exception {
-
-        RevCommit releaseCommit =
-                checkoutManager.getReleaseCommit(release);
-
-        Map<String, List<ClassChanges>> allChanges =
-                commitManager.getClassChanges(releaseCommit);
-
-        List<ClassChanges> changes =
-                new ArrayList<>();
-
-        for (Path file : javaFiles) {
-
-            String classPath =
-                    Config.REPOSITORY
-                            .relativize(file)
-                            .toString()
-                            .replace('\\', '/');
-
-            List<ClassChanges> classChanges =
-                    allChanges.get(classPath);
-
-            if (classChanges != null) {
-                changes.addAll(classChanges);
-            }
-        }
-
-        return changes;
-    }
-    /**
-     * Restituisce i file Java presenti nella release.
-     */
-    public List<Path> getJavaFiles(Release release)
-            throws Exception {
-
-        checkoutManager.checkoutRelease(release);
-
-        try (var files =
-                     Files.walk(
-                             checkoutManager
-                                     .getWorkingDirectory()
-                                     .toPath())) {
-
-            return files
-                    .filter(Files::isRegularFile)
-                    .filter(p -> p.toString().endsWith(".java"))
-                    .filter(p ->
-                            Config.INCLUDE_TESTS
-                                    || !isTestFile(p))
-                    .toList();
-
-        } finally {
-            checkoutManager.cleanRepository();
-        }
-    }
-    private static boolean isTestFile(Path path) {
-        String p = path.toString().replace('\\', '/');
-        return p.contains("/src/test/");
     }
 }

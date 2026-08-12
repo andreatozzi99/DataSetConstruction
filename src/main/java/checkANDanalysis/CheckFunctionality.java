@@ -2,18 +2,19 @@ package checkANDanalysis;
 
 import com.github.mauricioaniche.ck.CKClassResult;
 import config.Config;
+import manager.csvManager.CsvManager;
 import manager.javaClassScannerManager.JavaClassScanner;
 import manager.metricsManager.CKMetrics;
 import manager.metricsManager.ClassMetricsCollector;
 import manager.checkoutManager.CheckoutManager;
 import manager.commitManager.CommitManager;
+import manager.metricsManager.JGitMetrics;
+import manager.metricsManager.PMDMetrics;
 import manager.ticketManager.TicketManager;
 import manager.releaseManager.ReleaseManager;
-import model.ClassChanges;
-import model.CsvRow;
-import model.Ticket;
-import model.Release;
+import model.*;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -22,11 +23,8 @@ import szz.SzzAnalyzer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Set;
-import java.util.LinkedHashSet;
-import java.util.Optional;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Fotografia iniziale dei dati disponibili prima del labeling: dice in modo
@@ -55,8 +53,17 @@ public final class CheckFunctionality {
         checkClassChanges();
 
         checkReleaseCommit();
-        */
+
         checkJGitChanges();
+
+        checkFirstReleaseMetrics();
+
+        checkFirstReleaseCsvData();
+        */
+
+        primaryAnalysis(args);
+
+
     }
 
     public static void primaryAnalysis(String[] args) throws Exception {
@@ -118,23 +125,6 @@ public final class CheckFunctionality {
         return '"' + value.replace("\"", "\"\"") + '"';
     }
 
-    public static void checkReleaseRetrieval() throws Exception {
-
-        ReleaseManager releaseManager = new ReleaseManager();
-
-        List<Release> releases = releaseManager.getReleases();
-
-        System.out.println("Release trovate: " + releases.size());
-        System.out.println();
-
-        for (Release release : releases) {
-            System.out.println(release);
-        }
-        // crea il csv con le release trovate
-        releaseManager.generateReleaseCsv(releases);
-
-    }
-
     public static void checkCheckout() throws Exception {
 
         ReleaseManager releaseManager = new ReleaseManager();
@@ -177,12 +167,14 @@ public final class CheckFunctionality {
         }
     }
 
-    public static void checkGitTags() {
+    public static void checkGitTags() throws Exception {
 
-        CheckoutManager checkout = new CheckoutManager();
+        CheckoutManager checkoutManager = new CheckoutManager();
 
-        checkout.printTags();
+        System.out.println("=== TAG GIT ===");
 
+        // qui chiameremo una funzione dedicata quando la gestione dei tag
+        // sarà stata sistemata nel manager corretto
     }
 
     public static void checkJavaScanner() throws Exception {
@@ -234,30 +226,61 @@ public final class CheckFunctionality {
         checkoutManager.cleanRepository();
     }
 
+    // Test per verificare che il commit della release sia correttamente individuato
     public static void checkReleaseCommit() throws Exception {
 
-        ReleaseManager releaseManager = new ReleaseManager();
-        CheckoutManager checkoutManager = new CheckoutManager();
+        CommitManager commitManager = new CommitManager();
 
-        List<Release> releases =
-                releaseManager.getReleases();
+        Release release = new Release(
+                1,
+                "12326789",
+                "0.9.0.1",
+                LocalDate.of(2013, 12, 6),
+                false
+        );
 
-        Release release = releases.get(0);
-
-        RevCommit commit =
-                checkoutManager.getReleaseCommit(release);
+        RevCommit commit = commitManager.getReleaseCommit(release);
 
         System.out.println("=== RELEASE COMMIT ===");
         System.out.println("Release: " + release.name());
         System.out.println("Data: " + release.releaseDate());
         System.out.println("Commit: " + commit.getName());
-        System.out.println("Messaggio: " + commit.getShortMessage());
+        System.out.println("Messaggio: " + commit.getFullMessage());
     }
 
-    public static void checkJGitChanges() throws Exception {
+    public static void checkFirstReleaseMetrics() throws Exception {
 
-        ReleaseManager releaseManager =
-                new ReleaseManager();
+        System.out.println();
+        System.out.println("========================================");
+        System.out.println("=== TEST CK + JGIT PRIMA RELEASE ===");
+        System.out.println("========================================");
+
+        long totalStart = System.nanoTime();
+
+        // ---------------------------------------------------------
+        // 1. Recupero release
+        // ---------------------------------------------------------
+
+        ReleaseManager releaseManager = new ReleaseManager();
+
+        List<Release> releases =
+                releaseManager.getReleases();
+
+        if (releases.isEmpty()) {
+            throw new IllegalStateException(
+                    "Nessuna release trovata.");
+        }
+
+        Release release = releases.get(0);
+
+        System.out.println();
+        System.out.println("Release scelta:");
+        System.out.println("Nome: " + release.name());
+        System.out.println("Data: " + release.releaseDate());
+
+        // ---------------------------------------------------------
+        // 2. Checkout
+        // ---------------------------------------------------------
 
         CheckoutManager checkoutManager =
                 new CheckoutManager();
@@ -271,39 +294,545 @@ public final class CheckFunctionality {
         CommitManager commitManager =
                 new CommitManager();
 
+        JGitMetrics jGitMetrics =
+                new JGitMetrics();
+
+        PMDMetrics pmdMetrics =
+                new PMDMetrics();
+
         ClassMetricsCollector collector =
                 new ClassMetricsCollector(
                         checkoutManager,
                         scanner,
                         ckMetrics,
-                        commitManager);
+                        commitManager,
+                        jGitMetrics,
+                        pmdMetrics);
 
-        Release release =
-                releaseManager
-                        .getReleases()
-                        .get(0);
+        // ---------------------------------------------------------
+        // 3. Recupero file Java
+        // ---------------------------------------------------------
 
-        List<Path> javaFiles =
-                collector.getJavaFiles(release);
+        long startFiles =
+                System.nanoTime();
 
-        System.out.println("=== JGIT CHANGES ===");
-        System.out.println("Release: " + release.name());
-        System.out.println("Java files: " + javaFiles.size());
+        checkoutManager.checkoutRelease(release);
 
-        List<ClassChanges> changes =
-                collector.collectClassChanges(
-                        release,
-                        javaFiles);
+        List<Path> javaFiles;
+
+        try {
+            javaFiles =
+                    scanner.findJavaFiles(
+                            checkoutManager
+                                    .getWorkingDirectory()
+                                    .toPath());
+        } finally {
+            checkoutManager.cleanRepository();
+        }
+
+        long endFiles =
+                System.nanoTime();
+
+        System.out.println();
+        System.out.println("=== FILE JAVA ===");
+        System.out.println(
+                "Java files: " + javaFiles.size());
+
+        printElapsed(
+                "Scansione file Java",
+                endFiles - startFiles);
+
+        // ---------------------------------------------------------
+        // 4. CK
+        // ---------------------------------------------------------
+
+        long startCK =
+                System.nanoTime();
+
+        checkoutManager.checkoutRelease(release);
+
+        Map<String, CKClassMetrics> ckResults;
+
+        try {
+            Path repository =
+                    checkoutManager
+                            .getWorkingDirectory()
+                            .toPath();
+
+            ckResults =
+                    ckMetrics.calculate(
+                            repository,
+                            javaFiles);
+
+        } finally {
+            checkoutManager.cleanRepository();
+        }
+
+        long endCK =
+                System.nanoTime();
+
+        System.out.println();
+        System.out.println("=== CK ===");
+        System.out.println(
+                "Classi con metriche CK: "
+                        + ckResults.size());
+
+        printElapsed(
+                "Calcolo metriche CK",
+                endCK - startCK);
+
+        // ---------------------------------------------------------
+        // 5. JGit
+        // ---------------------------------------------------------
+
+        long startJGit =
+                System.nanoTime();
+
+        RevCommit releaseCommit =
+                commitManager.getReleaseCommit(
+                        release);
+
+        Map<String, List<ClassChanges>> allChanges =
+                commitManager.getClassChanges(
+                        releaseCommit);
+
+        long endJGit =
+                System.nanoTime();
+
+        System.out.println();
+        System.out.println("=== JGIT ===");
 
         System.out.println(
-                "Class changes: " + changes.size());
+                "Commit analizzati: "
+                        + allChanges.values()
+                        .stream()
+                        .flatMap(List::stream)
+                        .map(ClassChanges::commitId)
+                        .distinct()
+                        .count());
 
-        for (int i = 0;
-             i < Math.min(20, changes.size());
-             i++) {
+        System.out.println(
+                "Classi con modifiche: "
+                        + allChanges.size());
 
-            System.out.println(changes.get(i));
+        System.out.println(
+                "ClassChanges totali: "
+                        + allChanges.values()
+                        .stream()
+                        .mapToLong(List::size)
+                        .sum());
+
+        printElapsed(
+                "Estrazione storia JGit",
+                endJGit - startJGit);
+
+        // ---------------------------------------------------------
+        // 6. Integrazione CK + JGit
+        // ---------------------------------------------------------
+
+        System.out.println();
+        System.out.println("=== INTEGRAZIONE ===");
+
+        int classesWithBoth = 0;
+
+        List<String> examples =
+                new ArrayList<>();
+
+        for (Path javaFile : javaFiles) {
+
+            String classPath =
+                    checkoutManager
+                            .getRepositoryPath()
+                            .relativize(javaFile)
+                            .toString()
+                            .replace('\\', '/');
+
+            String absolutePath =
+                    javaFile
+                            .toAbsolutePath()
+                            .normalize()
+                            .toString();
+
+            CKClassMetrics ck =
+                    ckResults.get(absolutePath);
+
+            List<ClassChanges> changes =
+                    allChanges.getOrDefault(
+                            classPath,
+                            List.of());
+
+            JGitClassMetrics git =
+                    jGitMetrics.calculate(
+                            changes,
+                            release.releaseDate());
+
+            if (ck != null) {
+
+                classesWithBoth++;
+
+                if (examples.size() < 10) {
+                    examples.add(
+                            classPath
+                                    + " | LOC=" + ck.loc()
+                                    + " | commits=" + git.commitCount()
+                                    + " | fixes=" + git.fixCommitCount()
+                                    + " | churn=" + git.churn()
+                                    + " | authors=" + git.distinctAuthors());
+                }
+            }
         }
+
+        System.out.println(
+                "Classi con CK + JGit: "
+                        + classesWithBoth);
+
+        System.out.println();
+        System.out.println("Prime 10 classi:");
+
+        for (String example : examples) {
+            System.out.println(example);
+        }
+
+        // ---------------------------------------------------------
+        // 7. Tempo totale
+        // ---------------------------------------------------------
+
+        long totalEnd =
+                System.nanoTime();
+
+        System.out.println();
+        printElapsed(
+                "TEMPO TOTALE TEST",
+                totalEnd - totalStart);
+
+        System.out.println();
+        System.out.println("=== TEST TERMINATO ===");
+    }
+
+    public static void checkFirstReleaseCsvData() throws Exception {
+
+        System.out.println();
+        System.out.println("========================================");
+        System.out.println("=== TEST CSV PRIMA RELEASE ===");
+        System.out.println("========================================");
+
+        long start = System.nanoTime();
+
+        // --------------------------------------------------
+        // 1. Recupero release
+        // --------------------------------------------------
+
+        ReleaseManager releaseManager = new ReleaseManager();
+
+        List<Release> releases =
+                releaseManager.getReleases();
+
+        if (releases.isEmpty()) {
+            throw new IllegalStateException(
+                    "Nessuna release trovata.");
+        }
+
+        Release release = releases.get(0);
+
+        System.out.println();
+        System.out.println("Release scelta:");
+        System.out.println("Nome: " + release.name());
+        System.out.println("Data: " + release.releaseDate());
+
+        // --------------------------------------------------
+        // 2. Inizializzazione componenti
+        // --------------------------------------------------
+
+        CheckoutManager checkoutManager =
+                new CheckoutManager();
+
+        JavaClassScanner scanner =
+                new JavaClassScanner();
+
+        CKMetrics ckMetrics =
+                new CKMetrics();
+
+        CommitManager commitManager =
+                new CommitManager();
+
+        JGitMetrics jGitMetrics =
+                new JGitMetrics();
+
+        PMDMetrics pmdMetrics =
+                new PMDMetrics();
+
+        ClassMetricsCollector collector =
+                new ClassMetricsCollector(
+                        checkoutManager,
+                        scanner,
+                        ckMetrics,
+                        commitManager,
+                        jGitMetrics,
+                        pmdMetrics
+                );
+
+        // --------------------------------------------------
+        // 3. Checkout + file Java
+        // --------------------------------------------------
+
+        long filesStart = System.nanoTime();
+
+        checkoutManager.checkoutRelease(release);
+
+        List<Path> javaFiles;
+
+        try {
+            javaFiles =
+                    scanner.findJavaFiles(
+                            checkoutManager
+                                    .getWorkingDirectory()
+                                    .toPath()
+                    );
+        } finally {
+            checkoutManager.cleanRepository();
+        }
+
+        long filesEnd = System.nanoTime();
+
+        System.out.println();
+        System.out.println("=== FILE JAVA ===");
+        System.out.println(
+                "Java files: " + javaFiles.size());
+
+        System.out.printf(
+                "Scansione file Java: %.3f secondi%n",
+                (filesEnd - filesStart) / 1_000_000_000.0
+        );
+
+        // --------------------------------------------------
+        // 4. Storia Git
+        // --------------------------------------------------
+
+        long gitStart = System.nanoTime();
+
+        Map<String, List<ClassChanges>> allChanges =
+                commitManager.getClassChanges(commitManager.getReleaseCommit(release));
+
+        long gitEnd = System.nanoTime();
+
+        long totalChanges =
+                allChanges.values()
+                        .stream()
+                        .mapToLong(List::size)
+                        .sum();
+
+        System.out.println();
+        System.out.println("=== JGIT ===");
+        System.out.println(
+                "Classi con modifiche: "
+                        + allChanges.size());
+
+        System.out.println(
+                "ClassChanges totali: "
+                        + totalChanges);
+
+        System.out.printf(
+                "Estrazione storia JGit: %.3f secondi%n",
+                (gitEnd - gitStart) / 1_000_000_000.0
+        );
+
+        // --------------------------------------------------
+        // 5. CK + JGit
+        // --------------------------------------------------
+
+        long metricsStart = System.nanoTime();
+
+        List<CsvRow> rows =
+                collector.collect(
+                        release,
+                        allChanges
+                );
+
+        long metricsEnd = System.nanoTime();
+
+        System.out.println();
+        System.out.println("=== CK + JGIT ===");
+
+        System.out.println(
+                "CsvRow generate: "
+                        + rows.size());
+
+        System.out.printf(
+                "Calcolo CK + JGit: %.3f secondi%n",
+                (metricsEnd - metricsStart)
+                        / 1_000_000_000.0
+        );
+
+        // --------------------------------------------------
+        // 6. Verifica
+        // --------------------------------------------------
+
+        if (rows.size() != javaFiles.size()) {
+
+            System.err.println(
+                    "ATTENZIONE: numero CsvRow diverso "
+                            + "dal numero di file Java!"
+            );
+
+            System.err.println(
+                    "Java files = "
+                            + javaFiles.size());
+
+            System.err.println(
+                    "CsvRow = "
+                            + rows.size());
+        } else {
+
+            System.out.println(
+                    "OK: tutte le classi hanno "
+                            + "CK + JGit."
+            );
+        }
+
+        // --------------------------------------------------
+        // 7. Prime 10 righe complete
+        // --------------------------------------------------
+
+        System.out.println();
+        System.out.println("=== PRIME 10 RIGHE ===");
+
+        rows.stream()
+                .limit(10)
+                .forEach(row -> {
+
+                    System.out.println();
+                    System.out.println(
+                            "Classe: "
+                                    + row.classPath());
+
+                    System.out.println(
+                            "  LOC = "
+                                    + row.loc());
+
+                    System.out.println(
+                            "  WMC = "
+                                    + row.wmc());
+
+                    System.out.println(
+                            "  CBO = "
+                                    + row.cbo());
+
+                    System.out.println(
+                            "  RFC = "
+                                    + row.rfc());
+
+                    System.out.println(
+                            "  LCOM = "
+                                    + row.lcom());
+
+                    System.out.println(
+                            "  DIT = "
+                                    + row.dit());
+
+                    System.out.println(
+                            "  NOC = "
+                                    + row.noc());
+
+                    System.out.println(
+                            "  FANIN = "
+                                    + row.fanin());
+
+                    System.out.println(
+                            "  FANOUT = "
+                                    + row.fanout());
+
+                    System.out.println(
+                            "  commits = "
+                                    + row.commitCount());
+
+                    System.out.println(
+                            "  fix commits = "
+                                    + row.fixCommitCount());
+
+                    System.out.println(
+                            "  churn = "
+                                    + row.churn());
+
+                    System.out.println(
+                            "  avg changeset = "
+                                    + row.averageChangeSetSize());
+
+                    System.out.println(
+                            "  authors = "
+                                    + row.distinctAuthors());
+
+                    System.out.println(
+                            "  days since last change = "
+                                    + row.daysSinceLastChange());
+
+                    System.out.println(
+                            "  change frequency = "
+                                    + row.changeFrequency());
+
+                    System.out.println(
+                            "  changes last 90 days = "
+                                    + row.changeCountLast90Days());
+
+                    System.out.println(
+                            "  interval std dev = "
+                                    + row.modificationIntervalsStdDev());
+
+                    System.out.println(
+                            "  author entropy = "
+                                    + row.authorChangeEntropy());
+
+                    System.out.println(
+                            "  buggy = "
+                                    + row.buggy());
+                });
+
+        // --------------------------------------------------
+        // 8. Tempo totale
+        // --------------------------------------------------
+
+        long end = System.nanoTime();
+
+        System.out.println();
+        System.out.println("========================================");
+
+        System.out.printf(
+                "TEMPO TOTALE: %.3f secondi%n",
+                (end - start) / 1_000_000_000.0
+        );
+
+        System.out.println(
+                "=== TEST TERMINATO ===");
+
+        System.out.println(
+                "========================================");
+    }
+
+    public void printTags() {
+        try (Repository repository = Utils.GitRepositoryUtils.openRepository();
+             Git git = new Git(repository)) {
+
+            System.out.println("=== TAG GIT ===");
+
+            for (Ref ref : git.tagList().call()) {
+                System.out.println(Repository.shortenRefName(ref.getName()));
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void printElapsed(
+            String operation,
+            long nanos) {
+
+        double seconds =
+                nanos / 1_000_000_000.0;
+
+        System.out.printf(
+                "%s: %.3f secondi%n",
+                operation,
+                seconds);
     }
 
 }

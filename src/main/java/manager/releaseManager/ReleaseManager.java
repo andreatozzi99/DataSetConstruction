@@ -51,16 +51,6 @@ public final class ReleaseManager {
         int position = releases.indexOf(release) + offset;
         return position >= 0 && position < releases.size() ? Optional.of(releases.get(position)) : Optional.empty();
     }
-    // genera il file csv delle release prendeno in input le release
-    public void generateReleaseCsv(List<Release> releases) throws IOException {
-        StringBuilder csv = new StringBuilder("index,jira_id,name,release_date,archived\n");
-        for (Release release : releases) {
-            csv.append(release.index()).append(',').append(q(release.jiraId())).append(',').append(q(release.name())).append(',')
-                    .append(release.releaseDate()).append(',').append(release.archived()).append('\n');
-        }
-        Files.writeString(Config.RELEASES_CSV, csv.toString(), StandardCharsets.UTF_8);
 
-    }
-    private static String q(String value) { return '"' + value.replace("\"", "\"\"") + '"'; }
 }
 

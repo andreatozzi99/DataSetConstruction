@@ -5,141 +5,147 @@ import model.Release;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 
-/** Gestisce il checkout temporaneo di una release senza usare comandi di shell. */
+/**
+ * Gestisce il checkout temporaneo di una release.
+ */
 public final class CheckoutManager {
+
     private final Path repositoryPath;
     private String originalReference;
 
-    /** Il costruttore normale usa il clone Storm previsto in Config. */
+    /**
+     * Usa il repository configurato in Config.
+     */
     public CheckoutManager() {
         this(Config.REPOSITORY);
     }
 
-    /** Il costruttore alternativo rende la classe testabile con un clone di prova. */
+    /**
+     * Permette di specificare un repository alternativo.
+     */
     public CheckoutManager(Path repositoryPath) {
         this.repositoryPath = repositoryPath;
     }
 
     /**
-     * Posiziona il clone sul tag della release. Viene rifiutato un repository
-     * con modifiche locali: un checkout non deve mai cancellare lavoro umano.
+     * Posiziona il repository sul tag della release.
      */
     public void checkoutRelease(Release release) {
-        requireRepository();
-        try (Repository repository = openRepository(); Git git = new Git(repository)) {
+
+        try (Repository repository = openRepository();
+             Git git = new Git(repository)) {
+
             if (!git.status().call().isClean()) {
-                throw new IllegalStateException("Il clone contiene modifiche locali: salvale prima del checkout.");
+                throw new IllegalStateException(
+                        "Il clone contiene modifiche locali: "
+                                + "salvale prima del checkout.");
             }
+
             if (originalReference == null) {
                 originalReference = repository.getFullBranch();
             }
 
-            String tag = findTag(git, release.name()).orElseThrow(() ->
-                    new IllegalArgumentException("Nessun tag Git trovato per la release " + release.name()));
-            // Il checkout sul tag e' volutamente detached: stiamo leggendo una fotografia storica.
-            git.checkout().setName(tag).call();
+            String tag =
+                    findTag(git, release.name())
+                            .orElseThrow(() ->
+                                    new IllegalArgumentException(
+                                            "Nessun tag Git trovato per la release "
+                                                    + release.name()));
+
+            git.checkout()
+                    .setName(tag)
+                    .call();
+
         } catch (Exception exception) {
-            throw new IllegalStateException("Checkout non riuscito per " + release.name(), exception);
+            throw new IllegalStateException(
+                    "Checkout non riuscito per "
+                            + release.name(),
+                    exception);
         }
     }
 
-    /** Restituisce la directory su cui gli estrattori possono eseguire la scansione dei file. */
+    /**
+     * Restituisce la directory del repository.
+     */
     public File getWorkingDirectory() {
-        requireRepository();
         return repositoryPath.toFile();
     }
 
     /**
-     * Riporta il clone al riferimento da cui siamo partiti. Non esegue reset o
-     * clean: quei comandi eliminerebbero file dell'utente e non sono necessari.
+     * Ripristina il riferimento originale.
      */
     public void cleanRepository() {
+
         if (originalReference == null) {
             return;
         }
-        try (Repository repository = openRepository(); Git git = new Git(repository)) {
-            git.checkout().setName(originalReference).call();
+
+        try (Repository repository = openRepository();
+             Git git = new Git(repository)) {
+
+            git.checkout()
+                    .setName(originalReference)
+                    .call();
+
             originalReference = null;
+
         } catch (Exception exception) {
-            throw new IllegalStateException("Impossibile ripristinare il riferimento iniziale del clone.", exception);
-        }
-    }
-
-    private Repository openRepository() throws IOException {
-        return new FileRepositoryBuilder().setGitDir(repositoryPath.resolve(".git").toFile()).build();
-    }
-
-    private void requireRepository() {
-        if (!Files.isDirectory(repositoryPath.resolve(".git"))) {
-            throw new IllegalStateException("Clone Storm non trovato in " + repositoryPath.toAbsolutePath());
+            throw new IllegalStateException(
+                    "Impossibile ripristinare il riferimento "
+                            + "iniziale del clone.",
+                    exception);
         }
     }
 
     public Path getRepositoryPath() {
         return repositoryPath;
     }
-    private static Optional<String> findTag(Git git, String releaseName) throws Exception {
-        for (Ref ref : git.tagList().call()) {
-            String tag = Repository.shortenRefName(ref.getName());
-            if (tag.equals(releaseName) || tag.equals("v" + releaseName)) {
-                return Optional.of(tag);
-            }
-        }
-        return Optional.empty();
+
+    /**
+     * Apre il repository locale.
+     */
+    private Repository openRepository() throws Exception {
+
+        return new org.eclipse.jgit.storage.file
+                .FileRepositoryBuilder()
+                .setGitDir(
+                        repositoryPath
+                                .resolve(".git")
+                                .toFile())
+                .readEnvironment()
+                .findGitDir()
+                .build();
     }
 
     /**
-     * Restituisce il commit associato al tag della release.
+     * Cerca il tag della release.
+     *
+     * Supporta:
+     * 0.9.0.1
+     * v0.9.0.1
      */
-    public RevCommit getReleaseCommit(Release release) throws Exception {
-        requireRepository();
+    public static Optional<String> findTag(
+            Git git,
+            String releaseName) throws Exception {
 
-        try (Repository repository = openRepository();
-             Git git = new Git(repository);
-             RevWalk walk = new RevWalk(repository)) {
+        for (Ref ref : git.tagList().call()) {
 
-            String tag = findTag(git, release.name())
-                    .orElseThrow(() ->
-                            new IllegalArgumentException(
-                                    "Nessun tag trovato per la release "
-                                            + release.name()));
+            String tag =
+                    Repository.shortenRefName(
+                            ref.getName());
 
-            Ref ref = repository.findRef(tag);
+            if (tag.equals(releaseName)
+                    || tag.equals("v" + releaseName)) {
 
-            if (ref == null) {
-                throw new IllegalStateException(
-                        "Riferimento Git non trovato: " + tag);
+                return Optional.of(tag);
             }
-
-            RevCommit commit =
-                    walk.parseCommit(repository.resolve(ref.getName()));
-
-            return commit;
         }
-    }
 
-    public void printTags() {
-        try (Repository repository = openRepository();
-             Git git = new Git(repository)) {
-
-            System.out.println("=== TAG GIT ===");
-
-            for (Ref ref : git.tagList().call()) {
-                System.out.println(Repository.shortenRefName(ref.getName()));
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return Optional.empty();
     }
 }
