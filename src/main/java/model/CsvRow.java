@@ -37,4 +37,39 @@ public record CsvRow(
         boolean buggy
 
 ) {
+    //
+    public CsvRow withBuggy(boolean buggy) {
+
+        return new CsvRow(
+                project,
+                releaseIndex,
+                releaseName,
+                classPath,
+
+                loc,
+                wmc,
+                cbo,
+                rfc,
+                lcom,
+                dit,
+                noc,
+                fanin,
+                fanout,
+
+                commitCount,
+                fixCommitCount,
+                churn,
+                averageChangeSetSize,
+                distinctAuthors,
+                daysSinceLastChange,
+                changeFrequency,
+                changeCountLast90Days,
+                modificationIntervalsStdDev,
+                authorChangeEntropy,
+
+                nSmells,
+
+                buggy
+        );
+    }
 }

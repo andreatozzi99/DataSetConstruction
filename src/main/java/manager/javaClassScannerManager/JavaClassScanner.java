@@ -1,8 +1,5 @@
 package manager.javaClassScannerManager;
 
-import config.Config;
-import org.eclipse.jgit.diff.DiffEntry;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,15 +11,15 @@ import java.util.stream.Stream;
  * Cerca e identifica i file Java presenti nella repository
  * della release corrente.
  *
- * Il manager si occupa esclusivamente della scansione delle
- * classi Java e della costruzione del loro percorso identificativo.
+ * Il manager si occupa esclusivamente della scansione dei
+ * file Java di produzione e della costruzione del loro percorso
+ * identificativo.
  */
 public final class JavaClassScanner {
 
     /**
-     * Restituisce tutti i file Java presenti nella repository.
-     *
-     * I test vengono esclusi se Config.INCLUDE_TESTS è false.
+     * Restituisce tutti i file Java di produzione presenti nel repository.
+     * I file di test sono esclusi dall'intera pipeline.
      */
     public List<Path> findJavaFiles(Path repositoryPath) {
 
@@ -30,9 +27,9 @@ public final class JavaClassScanner {
 
             return files
                     .filter(Files::isRegularFile)
-                    .filter(path -> path.toString().endsWith(".java"))
                     .filter(path ->
-                            Config.INCLUDE_TESTS || !isTestFile(path))
+                            isJavaProductionFile(
+                                    path.toString()))
                     .sorted(Comparator.naturalOrder())
                     .toList();
 
@@ -45,119 +42,29 @@ public final class JavaClassScanner {
     }
 
     /**
-     * Restituisce il nome/percorso identificativo della classe
-     * secondo il formato configurato in Config.
-     *
-     * Il formato può essere modificato senza cambiare questo manager.
+     * Restituisce il percorso relativo alla radice del repository.
+     * Questo è il formato usato anche da Git e SZZ per associare la
+     * storia delle modifiche alle righe del dataset.
      */
     public String getClassName(
             Path repositoryPath,
             Path javaFile) {
 
-        return switch (Config.CLASS_NAME_FORMAT) {
-
-            case REPOSITORY_RELATIVE ->
-                    repositoryPath
-                            .relativize(javaFile)
-                            .toString()
-                            .replace('\\', '/');
-
-            case PACKAGE_RELATIVE ->
-                    buildPackageRelative(
-                            repositoryPath,
-                            javaFile);
-        };
-    }
-
-    /**
-     * Verifica se un file appartiene alla directory dei test.
-     */
-    private boolean isTestFile(Path path) {
-
-        String normalized =
-                path.toString().replace('\\', '/');
-
-        return normalized.contains("/src/test/");
-    }
-
-    /**
-     * Costruisce il percorso della classe relativo alla parte
-     * di package del progetto.
-     *
-     * Esempio:
-     *
-     * storm-core/src/jvm/backtype/storm/Config.java
-     *
-     * diventa:
-     *
-     * backtype/storm/Config.java
-     */
-    private String buildPackageRelative(
-            Path repositoryPath,
-            Path javaFile) {
-
-        Path relative =
-                repositoryPath.relativize(javaFile);
-
-        int srcIndex = -1;
-
-        for (int i = 0;
-             i < relative.getNameCount();
-             i++) {
-
-            if ("src".equals(
-                    relative.getName(i).toString())) {
-
-                srcIndex = i;
-                break;
-            }
-        }
-
-        /*
-         * Se non troviamo una directory src,
-         * manteniamo semplicemente il percorso relativo
-         * alla repository.
-         */
-        if (srcIndex == -1) {
-
-            return relative
-                    .toString()
-                    .replace('\\', '/');
-        }
-
-        /*
-         * Dopo "src" normalmente abbiamo:
-         *
-         * src/jvm/backtype/storm/...
-         *
-         * quindi saltiamo:
-         *
-         * src + jvm
-         *
-         * e manteniamo il package.
-         */
-        int start = Math.min(
-                srcIndex + 2,
-                relative.getNameCount() - 1);
-
-        return relative
-                .subpath(
-                        start,
-                        relative.getNameCount())
+        return repositoryPath
+                .relativize(javaFile)
                 .toString()
                 .replace('\\', '/');
     }
 
     /**
-     * Controlla che il path appartenga a una classe
-     * Java di produzione.
+     * Controlla che il path appartenga a un file Java di produzione.
+     * Il test è basato sulle directory denominate {@code test}, sia per
+     * path relativi Git sia per path assoluti del filesystem.
      */
     public static boolean isJavaProductionFile(
             String path) {
 
-        if (path == null
-                || DiffEntry.DEV_NULL.equals(path)) {
-
+        if (path == null) {
             return false;
         }
 
@@ -165,6 +72,7 @@ public final class JavaClassScanner {
                 path.replace('\\', '/');
 
         return normalized.endsWith(".java")
-                && !normalized.contains("/src/test/");
+                && !normalized.startsWith("test/")
+                && !normalized.contains("/test/");
     }
 }

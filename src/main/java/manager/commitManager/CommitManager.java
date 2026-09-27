@@ -1,5 +1,6 @@
 package manager.commitManager;
 
+import config.Config;
 import model.ClassChanges;
 import model.Release;
 import org.eclipse.jgit.api.Git;
@@ -54,11 +55,14 @@ public final class CommitManager {
          * Estrae dal messaggio solamente chiavi Jira complete,
          * evitando match parziali come:
          *
-         * STORM-1 -> STORM-123
+         * PROJECT-1 -> PROJECT-123
          */
         java.util.regex.Pattern jiraPattern =
                 java.util.regex.Pattern.compile(
-                        "\\bSTORM-\\d+\\b",
+                        "\\b"
+                                + java.util.regex.Pattern.quote(
+                                        Config.PROJECT_KEY)
+                                + "-\\d+\\b",
                         java.util.regex.Pattern.CASE_INSENSITIVE
                 );
 
@@ -230,9 +234,9 @@ public final class CommitManager {
                                     commit.getTree());
 
                     int changeSetSize =
-                            countJavaFiles(entries);
+                            entries.size();
 
-                    if (changeSetSize == 0) {
+                    if (!containsJavaProductionFile(entries)) {
                         continue;
                     }
 
@@ -378,13 +382,11 @@ public final class CommitManager {
     }
 
     /**
-     * Conta quanti file Java di produzione
-     * sono stati modificati da un commit.
+     * Verifica se un commit modifica almeno un file Java di produzione.
+     * La dimensione del changeset, invece, comprende tutti i file del commit.
      */
-    private static int countJavaFiles(
+    private static boolean containsJavaProductionFile(
             List<DiffEntry> entries) {
-
-        int count = 0;
 
         for (DiffEntry entry : entries) {
 
@@ -395,11 +397,11 @@ public final class CommitManager {
                             : entry.getNewPath();
 
             if (isJavaProductionFile(path)) {
-                count++;
+                return true;
             }
         }
 
-        return count;
+        return false;
     }
 
     /**

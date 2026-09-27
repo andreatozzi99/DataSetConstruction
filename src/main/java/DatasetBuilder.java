@@ -1,4 +1,6 @@
 import config.Config;
+import labeling.BuggyLabeler;
+import labeling.SzzAnalyzer;
 import manager.checkoutManager.CheckoutManager;
 import manager.commitManager.CommitManager;
 import manager.csvManager.CsvManager;
@@ -13,32 +15,57 @@ import model.ClassChanges;
 import model.CsvRow;
 import model.Release;
 import model.Ticket;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
 
 /**
- * Costruisce il dataset a partire dalle release selezionate.
+ * Costruisce il dataset finale del progetto.
+ *
+ * La pipeline comprende:
+ * - recupero delle release;
+ * - recupero dei ticket Jira fixed;
+ * - individuazione dei fixing commit;
+ * - applicazione di SZZ;
+ * - stima della Injected Version tramite Proportion quando necessaria;
+ * - labeling delle classi;
+ * - calcolo delle metriche CK;
+ * - calcolo delle metriche storiche JGit;
+ * - calcolo dei code smell con PMD;
+ * - scrittura del dataset CSV.
  */
 public final class DatasetBuilder {
 
-    public static void main(String[] args) throws Exception {
+    private DatasetBuilder() {
+    }
+
+    public static void main(String[] args)
+            throws Exception {
+
+        /*
+         * ============================================================
+         * COMPONENTI
+         * ============================================================
+         */
 
         ReleaseManager releaseManager =
                 new ReleaseManager();
 
-        List<Release> trainingReleases =
-                releaseManager.getTrainingReleases(
-                        releaseManager.getReleases());
-
-        JavaClassScanner scanner =
-                new JavaClassScanner();
+        TicketManager ticketManager =
+                new TicketManager();
 
         CheckoutManager checkoutManager =
                 new CheckoutManager();
+
+        JavaClassScanner scanner =
+                new JavaClassScanner();
 
         CKMetrics ckMetrics =
                 new CKMetrics();
@@ -57,58 +84,219 @@ public final class DatasetBuilder {
                         checkoutManager,
                         scanner,
                         ckMetrics,
-                        commitManager,
                         jGitMetrics,
-                        pmdMetrics);
+                        pmdMetrics
+                );
 
         /*
-         * Recuperiamo i ticket Jira risolti/fixed.
+         * ============================================================
+         * RELEASE
+         * ============================================================
          */
-        TicketManager ticketManager =
-                new TicketManager();
 
+        List<Release> releases =
+                releaseManager.getReleases();
+
+        List<Release> trainingReleases =
+                releaseManager.getTrainingReleases(
+                        releases);
+
+        OptionalInt releaseLimit = readReleaseLimit(args);
+        List<Release> releasesToProcess = releaseLimit.isPresent()
+                ? trainingReleases.stream().limit(releaseLimit.getAsInt()).toList()
+                : trainingReleases;
+
+        System.out.println(
+                "Release totali: "
+                        + releases.size());
+
+        System.out.println(
+                "Release usate nel dataset: "
+                        + releasesToProcess.size());
+
+        /*
+         * ============================================================
+         * TICKET JIRA FIXED
+         * ============================================================
+         */
+
+        /*
+         * TicketManager deve prima recuperare
+         * i ticket da Jira.
+         */
         ticketManager.getTickets();
 
         List<Ticket> fixedTickets =
                 ticketManager.getFixedTickets();
 
-        Set<String> ticketKeys =
-                fixedTickets.stream()
-                        .map(Ticket::key)
-                        .collect(Collectors.toSet());
-
         System.out.println(
                 "Ticket fixed Jira: "
                         + fixedTickets.size());
 
-        /*
-         * Cerca una sola volta i commit Git associati
-         * alle chiavi Jira.
-         */
-        Map<String, List<RevCommit>> fixCommitsByTicket =
-                commitManager.findFixCommits(ticketKeys);
+        Set<String> ticketKeys =
+                fixedTickets
+                        .stream()
+                        .map(Ticket::key)
+                        .collect(
+                                Collectors.toCollection(
+                                        LinkedHashSet::new));
 
         /*
-         * Otteniamo l'insieme degli SHA dei fixing commit.
+         * ============================================================
+         * FIXING COMMIT
+         * ============================================================
+         */
+
+        Map<String, List<RevCommit>> fixCommitsByTicket =
+                commitManager.findFixCommits(
+                        ticketKeys);
+
+        /*
+         * Insieme globale degli ID dei fixing commit.
+         *
+         * Verrà usato da CommitManager per impostare
+         * ClassChanges.fix = true.
          */
         Set<String> fixCommitIds =
-                fixCommitsByTicket.values()
+                fixCommitsByTicket
+                        .values()
                         .stream()
                         .flatMap(List::stream)
                         .map(RevCommit::getName)
-                        .collect(Collectors.toSet());
+                        .collect(
+                                Collectors.toCollection(
+                                        LinkedHashSet::new));
 
         System.out.println(
                 "Fix commit Git trovati: "
                         + fixCommitIds.size());
 
-        try (CsvManager csv =
-                     new CsvManager(Config.DATASET_CSV)) {
+        /*
+         * ============================================================
+         * SZZ
+         * ============================================================
+         *
+         * inducingCommits:
+         *
+         * ticket -> classe -> bug-inducing commit
+         */
 
-            csv.createCsv();
-            csv.writeHeader();
+        Map<String, Map<String, Set<RevCommit>>> inducingCommits =
+                new LinkedHashMap<>();
 
-            for (Release release : trainingReleases.stream().limit(1).toList()) {
+        try (Repository repository =
+                     Utils.GitRepositoryUtils.openRepository()) {
+
+            SzzAnalyzer szzAnalyzer =
+                    new SzzAnalyzer(
+                            repository);
+
+            int processedTickets = 0;
+
+            for (Ticket ticket :
+                    fixedTickets) {
+
+                List<RevCommit> fixingCommits =
+                        fixCommitsByTicket
+                                .getOrDefault(
+                                        ticket.key(),
+                                        List.of());
+
+                /*
+                 * Risultati SZZ relativi al singolo ticket.
+                 *
+                 * classe -> inducing commits
+                 */
+                Map<String, Set<RevCommit>> ticketInducing =
+                        new LinkedHashMap<>();
+
+                /*
+                 * Uno stesso ticket può essere associato
+                 * a più fixing commit.
+                 */
+                for (RevCommit fixingCommit :
+                        fixingCommits) {
+
+                    Map<String, Set<RevCommit>> found =
+                            szzAnalyzer
+                                    .findInducingCommits(
+                                            fixingCommit);
+
+                    /*
+                     * Uniamo i risultati senza perdere
+                     * l'associazione con la singola classe.
+                     */
+                    for (Map.Entry<String, Set<RevCommit>> entry :
+                            found.entrySet()) {
+
+                        ticketInducing
+                                .computeIfAbsent(
+                                        entry.getKey(),
+                                        ignored ->
+                                                new LinkedHashSet<>())
+                                .addAll(
+                                        entry.getValue());
+                    }
+                }
+
+                inducingCommits.put(
+                        ticket.key(),
+                        ticketInducing);
+
+                processedTickets++;
+
+                if (processedTickets % 25 == 0) {
+
+                    System.out.println(
+                            "SZZ: "
+                                    + processedTickets
+                                    + "/"
+                                    + fixedTickets.size());
+                }
+            }
+        }
+
+        /*
+         * ============================================================
+         * LABELING
+         * ============================================================
+         *
+         * BuggyLabeler utilizza:
+         *
+         * 1. SZZ per individuare le classi coinvolte;
+         * 2. Affected Version Jira per determinare la IV;
+         * 3. Proportion Total quando AV manca;
+         * 4. Fixed Version per chiudere l'intervallo.
+         *
+         * Una classe è buggy nell'intervallo:
+         *
+         * IV <= release < FV
+         */
+
+        BuggyLabeler buggyLabeler =
+                new BuggyLabeler();
+
+        buggyLabeler.labelBugs(
+                fixedTickets,
+                releases,
+                inducingCommits
+        );
+
+        /*
+         * ============================================================
+         * COSTRUZIONE CSV
+         * ============================================================
+         */
+
+        try (CsvManager csvManager =
+                     new CsvManager(
+                             Config.DATASET_CSV)) {
+
+            csvManager.createCsv();
+            csvManager.writeHeader();
+
+            for (Release release :
+                    releasesToProcess) {
 
                 System.out.println();
                 System.out.println(
@@ -119,36 +307,42 @@ public final class DatasetBuilder {
                                 + release.name());
 
                 /*
-                 * Recupera il commit corrispondente
-                 * al tag della release.
+                 * Commit associato al tag
+                 * della release corrente.
                  */
                 RevCommit releaseCommit =
-                        CommitManager.getReleaseCommit(
-                                release);
+                        CommitManager
+                                .getReleaseCommit(
+                                        release);
 
                 /*
-                 * Recupera la storia delle classi fino
-                 * alla release e marca i fixing commit.
+                 * Recupera tutta la storia delle modifiche
+                 * alle classi fino alla release.
+                 *
+                 * I fixing commit vengono marcati usando
+                 * l'insieme fixCommitIds.
                  */
                 Map<String, List<ClassChanges>> allChanges =
-                        commitManager.getClassChanges(
-                                releaseCommit,
-                                fixCommitIds);
+                        commitManager
+                                .getClassChanges(
+                                        releaseCommit,
+                                        fixCommitIds);
 
                 /*
-                 * Controllo temporaneo:
-                 * quante modifiche sono state riconosciute
-                 * come appartenenti a fixing commit.
+                 * Controllo diagnostico sui fixing commit
+                 * presenti nella storia fino alla release.
                  */
                 long fixChanges =
-                        allChanges.values()
+                        allChanges
+                                .values()
                                 .stream()
                                 .flatMap(List::stream)
                                 .filter(ClassChanges::fix)
                                 .count();
 
                 long distinctFixCommits =
-                        allChanges.values()
+                        allChanges
+                                .values()
                                 .stream()
                                 .flatMap(List::stream)
                                 .filter(ClassChanges::fix)
@@ -165,18 +359,58 @@ public final class DatasetBuilder {
                                 + distinctFixCommits);
 
                 /*
-                 * CK + metriche storiche Git.
+                 * Calcolo delle feature:
                  *
-                 * Il checkout della release viene gestito
-                 * dal CheckoutManager attraverso il collector.
+                 * - CK
+                 * - JGit
+                 * - PMD
+                 *
+                 * Il collector crea inizialmente le righe
+                 * con buggy=false.
                  */
                 List<CsvRow> rows =
                         metrics.collect(
                                 release,
                                 allChanges);
 
-                for (CsvRow row : rows) {
-                    csv.appendRow(row);
+                /*
+                 * Applichiamo ora il labeling corretto
+                 * classe per classe.
+                 */
+                rows =
+                        rows.stream()
+                                .map(row ->
+                                        row.withBuggy(
+                                                buggyLabeler
+                                                        .isBuggy(
+                                                                release,
+                                                                row.classPath())))
+                                .toList();
+
+                /*
+                 * Controlliamo quante classi vengono
+                 * effettivamente marcate buggy.
+                 */
+                long buggyRows =
+                        rows.stream()
+                                .filter(CsvRow::buggy)
+                                .count();
+
+                System.out.println(
+                        "Classi buggy nella release: "
+                                + buggyRows);
+
+                /*
+                 * Scriviamo immediatamente le righe.
+                 *
+                 * Non è necessario mantenere l'intero
+                 * dataset in memoria.
+                 */
+                for (CsvRow row :
+                        rows) {
+
+                    csvManager.appendRow(
+                            row);
                 }
 
                 System.out.println(
@@ -193,8 +427,29 @@ public final class DatasetBuilder {
         }
 
         System.out.println();
+
         System.out.println(
                 "Dataset completato: "
                         + Config.DATASET_CSV);
+    }
+
+    /**
+     * Consente una prova ripetibile, per esempio --release-limit=3, senza
+     * modificare sorgenti e senza rischiare di dimenticare un limite nel run
+     * definitivo. Se il parametro manca, vengono elaborate tutte le release.
+     */
+    private static OptionalInt readReleaseLimit(String[] args) {
+        for (String arg : args) {
+            if (arg.startsWith("--release-limit=")) {
+                try {
+                    int value = Integer.parseInt(arg.substring("--release-limit=".length()));
+                    if (value > 0) return OptionalInt.of(value);
+                } catch (NumberFormatException ignored) {
+                    // Il messaggio sotto spiega il formato atteso.
+                }
+                throw new IllegalArgumentException("Usa un limite positivo, ad esempio --release-limit=3");
+            }
+        }
+        return OptionalInt.empty();
     }
 }

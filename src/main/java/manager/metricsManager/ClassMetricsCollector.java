@@ -2,7 +2,6 @@ package manager.metricsManager;
 
 import config.Config;
 import manager.checkoutManager.CheckoutManager;
-import manager.commitManager.CommitManager;
 import manager.javaClassScannerManager.JavaClassScanner;
 import model.CKClassMetrics;
 import model.ClassChanges;
@@ -20,7 +19,7 @@ import java.util.Map;
  *
  * Per ogni release coordina:
  * - checkout del codice;
- * - individuazione delle classi Java;
+ * - individuazione dei file Java di produzione;
  * - metriche statiche CK;
  * - metriche storiche Git;
  * - code smell rilevati tramite PMD;
@@ -35,21 +34,18 @@ public final class ClassMetricsCollector {
     private final JavaClassScanner classScanner;
     private final CKMetrics ckMetrics;
     private final JGitMetrics jGitMetrics;
-    private final CommitManager commitManager;
     private final PMDMetrics pmdMetrics;
 
     public ClassMetricsCollector(
             CheckoutManager checkoutManager,
             JavaClassScanner classScanner,
             CKMetrics ckMetrics,
-            CommitManager commitManager,
             JGitMetrics jGitMetrics,
             PMDMetrics pmdMetrics) {
 
         this.checkoutManager = checkoutManager;
         this.classScanner = classScanner;
         this.ckMetrics = ckMetrics;
-        this.commitManager = commitManager;
         this.jGitMetrics = jGitMetrics;
         this.pmdMetrics = pmdMetrics;
     }
@@ -58,9 +54,9 @@ public final class ClassMetricsCollector {
      * Costruisce tutte le righe del dataset relative
      * alla release indicata.
      *
-     * Le modifiche Git vengono ricevute già estratte
+     * Il dataset contiene una riga per file Java. Le modifiche Git vengono ricevute già estratte
      * dal CommitManager, in modo da non rileggere
-     * la storia Git per ogni singola classe.
+     * la storia Git per ogni singolo file.
      *
      * @param release    release da analizzare
      * @param allChanges modifiche Git delle classi fino alla release
@@ -79,7 +75,7 @@ public final class ClassMetricsCollector {
                             .toPath();
 
             /*
-             * 1. Individuiamo tutte le classi Java
+             * 1. Individuiamo tutti i file Java di produzione
              * presenti nella release.
              */
             List<Path> javaFiles =
@@ -87,7 +83,7 @@ public final class ClassMetricsCollector {
 
             /*
              * 2. Calcoliamo una sola volta le metriche CK
-             * per tutte le classi della release.
+             * per tutti i file della release.
              */
             Map<String, CKClassMetrics> ckMetricsByPath =
                     ckMetrics.calculate(
@@ -129,7 +125,7 @@ public final class ClassMetricsCollector {
 
             /*
              * 4. Combiniamo tutte le metriche
-             * classe per classe.
+             * file per file.
              */
             for (Path javaFile : javaFiles) {
 
@@ -162,7 +158,7 @@ public final class ClassMetricsCollector {
                 /*
                  * Path che verrà scritto nel CSV.
                  * È anche il formato utilizzato dal CommitManager
-                 * per identificare le classi nella storia Git.
+                 * per identificare i file nella storia Git.
                  */
                 String classPath =
                         classScanner.getClassName(
@@ -171,7 +167,7 @@ public final class ClassMetricsCollector {
 
                 /*
                  * Recuperiamo tutte le modifiche storiche
-                 * della classe fino alla release corrente.
+                 * del file fino alla release corrente.
                  */
                 List<ClassChanges> changes =
                         allChanges.getOrDefault(

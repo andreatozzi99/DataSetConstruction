@@ -12,15 +12,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Calcola le metriche CK delle classi Java presenti nella release.
+ * Calcola le metriche CK usate per costruire una riga per ciascun file Java
+ * della release.
  */
 public final class CKMetrics {
 
     /**
      * Esegue CK sui file Java indicati.
      *
-     * I risultati vengono organizzati usando il percorso del file
-     * come chiave, così possono essere associati alle righe del dataset.
+     * I risultati vengono organizzati usando il percorso del file come chiave,
+     * così possono essere associati alle righe del dataset.
      */
     public Map<String, CKClassMetrics> calculate(
             Path repositoryPath,
@@ -68,8 +69,8 @@ public final class CKMetrics {
                             .toString();
 
             /*
-             * Se un file contiene più classi, per ora manteniamo
-             * il primo risultato prodotto da CK.
+             * Il dataset è al momento file-level. Se un file contiene più
+             * classi, viene mantenuto il primo risultato prodotto da CK.
              */
             results.putIfAbsent(
                     filePath,

@@ -1,8 +1,6 @@
 package checkANDanalysis;
 
-import com.github.mauricioaniche.ck.CKClassResult;
 import config.Config;
-import manager.csvManager.CsvManager;
 import manager.javaClassScannerManager.JavaClassScanner;
 import manager.metricsManager.CKMetrics;
 import manager.metricsManager.ClassMetricsCollector;
@@ -17,8 +15,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import szz.SzzAnalyzer;
+import labeling.SzzAnalyzer;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -27,87 +24,112 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * Fotografia iniziale dei dati disponibili prima del labeling: dice in modo
- * esplicito quali ticket possono arrivare fino a SZZ e quali no.
+ * Raccolta di verifiche manuali della pipeline. L'analisi principale produce
+ * un report sui ticket, sui fixing commit e, se richiesto, sui risultati SZZ.
  */
 public final class CheckFunctionality {
     public static void main(String[] args) throws Exception {
+        String command = args.length == 0 ? "help" : args[0].toLowerCase(Locale.ROOT);
+        switch (command) {
+            case "analysis" -> primaryAnalysis(Arrays.copyOfRange(args, 1, args.length));
+            case "checkout" -> checkCheckout();
+            case "checkouts" -> checkAllCheckouts();
+            case "tags" -> checkGitTags();
+            case "scanner" -> checkJavaScanner();
+            case "release-commit" -> checkReleaseCommit();
+            case "metrics" -> checkFirstReleaseMetrics();
+            case "csv" -> checkFirstReleaseCsvData();
+            default -> printUsage();
+        }
+    }
 
-        /*
-        checkReleaseRetrieval();
-
-        checkCheckout();
-
-        checkGitTags();
-
-        checkAllCheckouts();
-
-        checkJavaScanner();
-
-        testScannerOnAllTrainingReleases();
-
-        testClassMetricsCollector();
-
-        checkCK();
-
-        checkClassChanges();
-
-        checkReleaseCommit();
-
-        checkJGitChanges();
-
-        checkFirstReleaseMetrics();
-
-        checkFirstReleaseCsvData();
-        */
-
-        primaryAnalysis(args);
-
-
+    /** Elenco esplicito dei controlli disponibili: nessun test costoso parte per errore. */
+    private static void printUsage() {
+        System.out.println("Comandi disponibili:");
+        System.out.println("  analysis              report ticket, AV/FV, fixing commit e classi Java");
+        System.out.println("  analysis --with-szz   aggiunge SZZ: puo' richiedere molto tempo");
+        System.out.println("  checkout              prova il checkout della prima release");
+        System.out.println("  checkouts             controlla i tag di tutte le release");
+        System.out.println("  tags                  mostra i tag Git associabili alle release");
+        System.out.println("  scanner               conta e mostra file Java della prima release");
+        System.out.println("  release-commit        mostra il commit della prima release");
+        System.out.println("  metrics               calcola CK, JGit e PMD sulla prima release");
+        System.out.println("  csv                   genera e mostra le prime righe CSV della prima release");
     }
 
     public static void primaryAnalysis(String[] args) throws Exception {
         boolean runSzz = java.util.Arrays.asList(args).contains("--with-szz");
         TicketManager ticketManager = new TicketManager();
-        List<Ticket> fixedTickets = ticketManager.getTickets();
-        fixedTickets = ticketManager.getFixedTickets();
+        ticketManager.getTickets();
+        List<Ticket> fixedTickets = ticketManager.getFixedTickets();
         CommitManager finder = new CommitManager();
-        List<Release> releases = new ReleaseManager().getReleases();
         Map<String, List<RevCommit>> commitsByTicket = finder.findFixCommits(fixedTickets.stream().map(Ticket::key)
                 .collect(java.util.stream.Collectors.toSet()));
         Files.createDirectories(Config.OUTPUT);
 
-        StringBuilder csv = new StringBuilder("ticket,av_present,affected_versions,fv_present,fixed_versions,matching_commits,java_classes,java_class_paths,inducing_commits,iv_found,earliest_iv,szz_eligible,notes\n");
-        int withAv = 0, withFv = 0, withCommit = 0, szzEligible = 0, withIv = 0;
+        StringBuilder csv = new StringBuilder("ticket,av_present,affected_versions,fv_present,fixed_versions,matching_commits,fixing_java_file_count,fixing_java_file_paths,szz_inducing_file_count,szz_inducing_commits,szz_found,szz_eligible,notes\n");
+        int withAv = 0, withFv = 0, withCommit = 0, szzEligible = 0, withSzzResult = 0;
         int processed = 0;
-        // SZZ fa blame sul codice storico ed e' volutamente opzionale: il primo
-        // report deve arrivare velocemente e servire a scegliere i ticket migliori.
-        try (Repository repository = runSzz ? new FileRepositoryBuilder().setGitDir(Config.REPOSITORY.resolve(".git").toFile()).build() : null) {
-            SzzAnalyzer szz = new SzzAnalyzer(repository);
+        // SZZ esegue il blame sul codice storico; resta opzionale per mantenere
+        // veloce il report preliminare.
+        try (Repository repository = runSzz
+                ? Utils.GitRepositoryUtils.openRepository()
+                : null) {
+
+            SzzAnalyzer szz = runSzz
+                    ? new SzzAnalyzer(repository)
+                    : null;
+
             for (Ticket ticket : fixedTickets) {
                 boolean hasAv = !ticket.affectedVersions().isEmpty();
                 boolean hasFv = !ticket.fixVersions().isEmpty();
                 List<RevCommit> commits = commitsByTicket.get(ticket.key());
                 Set<String> classes = finder.findTouchedJavaClasses(commits);
-                Set<RevCommit> inducing = new LinkedHashSet<>();
-                Optional<Release> injectedVersion = Optional.empty();
+                Map<String, Set<RevCommit>> inducingByClass = Map.of();
+
                 if (runSzz) {
-                    for (RevCommit fix : commits)
-                        for (Set<RevCommit> found : szz.findInducingCommits(fix).values()) inducing.addAll(found);
-                    injectedVersion = inducing.stream().map(commit -> szz.findInjectedVersion(commit, releases))
-                            .flatMap(Optional::stream).min(java.util.Comparator.comparing(Release::releaseDate));
+                    inducingByClass = new LinkedHashMap<>();
+
+                    for (RevCommit fix : commits) {
+                        Map<String, Set<RevCommit>> found =
+                                szz.findInducingCommits(fix);
+
+                        for (Map.Entry<String, Set<RevCommit>> entry :
+                                found.entrySet()) {
+
+                            inducingByClass
+                                    .computeIfAbsent(
+                                            entry.getKey(),
+                                            ignored -> new LinkedHashSet<>())
+                                    .addAll(entry.getValue());
+                        }
+                    }
                 }
+
+                long inducingCommitCount = inducingByClass.values().stream()
+                        .flatMap(Set::stream)
+                        .map(RevCommit::getName)
+                        .distinct()
+                        .count();
+                boolean foundInducingCommits = !inducingByClass.isEmpty();
                 boolean eligible = !classes.isEmpty();
                 if (hasAv) withAv++;
                 if (hasFv) withFv++;
                 if (!commits.isEmpty()) withCommit++;
                 if (eligible) szzEligible++;
-                if (injectedVersion.isPresent()) withIv++;
-                String note = classes.isEmpty() ? "nessuna classe Java nei fixing commit" : (!runSzz ? "SZZ non eseguito: avvia con --with-szz" : (injectedVersion.isEmpty() ? "SZZ non ha trovato un commit introducente" : "pronto per labeling [IV,FV)"));
+                if (foundInducingCommits) withSzzResult++;
+                String note = classes.isEmpty()
+                        ? "nessun file Java di produzione nei fixing commit"
+                        : (!runSzz
+                        ? "SZZ non eseguito: avvia con --with-szz"
+                        : (foundInducingCommits
+                        ? "SZZ ha trovato commit inducing"
+                        : "SZZ non ha trovato commit inducing"));
                 csv.append(q(ticket.key())).append(',').append(hasAv).append(',').append(q(String.join("|", ticket.affectedVersions()))).append(',')
                         .append(hasFv).append(',').append(q(String.join("|", ticket.fixVersions()))).append(',')
-                        .append(commits.size()).append(',').append(classes.size()).append(',').append(q(String.join("|", classes))).append(',').append(inducing.size()).append(',')
-                        .append(injectedVersion.isPresent()).append(',').append(q(injectedVersion.map(Release::name).orElse(""))).append(',')
+                        .append(commits.size()).append(',').append(classes.size()).append(',').append(q(String.join("|", classes))).append(',')
+                        .append(inducingByClass.size()).append(',').append(inducingCommitCount).append(',')
+                        .append(foundInducingCommits).append(',')
                         .append(eligible).append(',').append(q(note)).append('\n');
                 processed++;
                 if (processed % 25 == 0)
@@ -116,7 +138,7 @@ public final class CheckFunctionality {
         }
         Files.writeString(Config.TICKET_ANALYSIS_CSV, csv, StandardCharsets.UTF_8);
         String report = "Ticket Fixed analizzati: " + fixedTickets.size() + "\nCon AV: " + withAv + "\nCon FV Jira: " + withFv
-                + "\nCon almeno un fixing commit: " + withCommit + "\nCon IV trovata da SZZ: " + withIv + "\nAnalizzabili da SZZ: " + szzEligible + "\n";
+                + "\nCon almeno un fixing commit: " + withCommit + "\nCon commit inducing trovati da SZZ: " + withSzzResult + "\nAnalizzabili da SZZ: " + szzEligible + "\n";
         Files.writeString(Config.TICKET_ANALYSIS_REPORT, report, StandardCharsets.UTF_8);
         System.out.println(report);
     }
@@ -139,7 +161,11 @@ public final class CheckFunctionality {
 
         checkoutManager.checkoutRelease(release);
 
-        System.out.println("Repository: " + checkoutManager.getWorkingDirectory());
+        try {
+            System.out.println("Repository: " + checkoutManager.getWorkingDirectory());
+        } finally {
+            checkoutManager.cleanRepository();
+        }
     }
 
     public static void checkAllCheckouts() throws Exception {
@@ -149,32 +175,39 @@ public final class CheckFunctionality {
 
         List<Release> releases = releaseManager.getReleases();
 
-        for (Release release : releases) {
+        try {
+            for (Release release : releases) {
 
-            System.out.print(release.name() + " -> ");
+                System.out.print(release.name() + " -> ");
 
-            try {
+                try {
 
-                checkoutManager.checkoutRelease(release);
+                    checkoutManager.checkoutRelease(release);
 
-                System.out.println("OK");
+                    System.out.println("OK");
 
-            } catch (Exception e) {
+                } catch (Exception e) {
 
-                System.out.println("ERRORE");
+                    System.out.println("ERRORE");
 
+                }
             }
+        } finally {
+            checkoutManager.cleanRepository();
         }
     }
 
     public static void checkGitTags() throws Exception {
 
-        CheckoutManager checkoutManager = new CheckoutManager();
+        try (Repository repository = Utils.GitRepositoryUtils.openRepository();
+             Git git = new Git(repository)) {
 
-        System.out.println("=== TAG GIT ===");
+            System.out.println("=== TAG GIT ===");
 
-        // qui chiameremo una funzione dedicata quando la gestione dei tag
-        // sarà stata sistemata nel manager corretto
+            for (Ref ref : git.tagList().call()) {
+                System.out.println(Repository.shortenRefName(ref.getName()));
+            }
+        }
     }
 
     public static void checkJavaScanner() throws Exception {
@@ -187,21 +220,23 @@ public final class CheckFunctionality {
 
         checkoutManager.checkoutRelease(release);
 
-        List<Path> javaFiles =
-                scanner.findJavaFiles(checkoutManager.getRepositoryPath());
+        try {
+            List<Path> javaFiles =
+                    scanner.findJavaFiles(checkoutManager.getRepositoryPath());
 
-        System.out.println("File Java trovati: " + javaFiles.size());
-        System.out.println();
+            System.out.println("File Java trovati: " + javaFiles.size());
+            System.out.println();
 
-        javaFiles.stream()
-                .limit(20)
-                .forEach(file ->
-                        System.out.println(
-                                scanner.getClassName(
-                                        checkoutManager.getRepositoryPath(),
-                                        file)));
-
-        checkoutManager.cleanRepository();
+            javaFiles.stream()
+                    .limit(20)
+                    .forEach(file ->
+                            System.out.println(
+                                    scanner.getClassName(
+                                            checkoutManager.getRepositoryPath(),
+                                            file)));
+        } finally {
+            checkoutManager.cleanRepository();
+        }
     }
 
     public static void testScannerOnAllTrainingReleases() throws Exception {
@@ -210,20 +245,22 @@ public final class CheckFunctionality {
         CheckoutManager checkoutManager = new CheckoutManager();
         JavaClassScanner scanner = new JavaClassScanner();
 
-        for (Release release : releaseManager.getTrainingReleases(
-                releaseManager.getReleases())) {
+        try {
+            for (Release release : releaseManager.getTrainingReleases(
+                    releaseManager.getReleases())) {
 
-            checkoutManager.checkoutRelease(release);
+                checkoutManager.checkoutRelease(release);
 
-            int count = scanner.findJavaFiles(
-                    checkoutManager.getRepositoryPath()).size();
+                int count = scanner.findJavaFiles(
+                        checkoutManager.getRepositoryPath()).size();
 
-            System.out.printf("%-20s %5d classi%n",
-                    release.name(),
-                    count);
+                System.out.printf("%-20s %5d file Java%n",
+                        release.name(),
+                        count);
+            }
+        } finally {
+            checkoutManager.cleanRepository();
         }
-
-        checkoutManager.cleanRepository();
     }
 
     // Test per verificare che il commit della release sia correttamente individuato
@@ -305,7 +342,6 @@ public final class CheckFunctionality {
                         checkoutManager,
                         scanner,
                         ckMetrics,
-                        commitManager,
                         jGitMetrics,
                         pmdMetrics);
 
@@ -566,7 +602,6 @@ public final class CheckFunctionality {
                         checkoutManager,
                         scanner,
                         ckMetrics,
-                        commitManager,
                         jGitMetrics,
                         pmdMetrics
                 );
@@ -805,21 +840,6 @@ public final class CheckFunctionality {
 
         System.out.println(
                 "========================================");
-    }
-
-    public void printTags() {
-        try (Repository repository = Utils.GitRepositoryUtils.openRepository();
-             Git git = new Git(repository)) {
-
-            System.out.println("=== TAG GIT ===");
-
-            for (Ref ref : git.tagList().call()) {
-                System.out.println(Repository.shortenRefName(ref.getName()));
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private static void printElapsed(
