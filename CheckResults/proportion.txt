@@ -1,0 +1,553 @@
+Risultato salvato in: C:\Users\andre\Desktop\ISW2\DataSetConstruction\CheckResults\proportion.txt
+Comando: proportion | avvio: 2026-09-28T12:00:48.569176100
+
+============================================================
+PROPORTION TOTAL
+============================================================
+[OK] Ticket usati per P: 183
+[WARN] Ticket scartati - AV_UNRESOLVED: 18
+[WARN] Ticket scartati - FV_AFTER_CORPUS: 1
+[WARN] Ticket scartati - FV_EQ_OV: 343
+[WARN] Ticket scartati - FV_LT_OV: 9
+[WARN] Ticket scartati - FV_UNRESOLVED: 7
+[WARN] Ticket scartati - IV_EQ_FV: 144
+[WARN] Ticket scartati - IV_GT_FV: 23
+[WARN] Ticket scartati - NO_AV_DECLARED: 448
+[WARN] Ticket scartati - NO_FV: 14
+[WARN] Ticket scartati - NO_OV: 3
+Esclusioni IV >= FV totali: 167 | IV_EQ_FV: 144 | IV_GT_FV: 23
+Esempi IV_EQ_FV (massimo 10 su 144):
+  STORM-3510 | AV dichiarate=[2.2.0] | IV scelta=29/2.2.0 | FV=29/2.2.0 | OV=28/2.1.0 | stato=IV_EQ_FV
+  STORM-3092 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=26/2.0.0 | OV=24/1.1.3 | stato=IV_EQ_FV
+  STORM-3091 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=26/2.0.0 | OV=24/1.1.3 | stato=IV_EQ_FV
+  STORM-3079 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=26/2.0.0 | OV=24/1.1.3 | stato=IV_EQ_FV
+  STORM-3075 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=26/2.0.0 | OV=24/1.1.3 | stato=IV_EQ_FV
+  STORM-3073 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=26/2.0.0 | OV=24/1.1.3 | stato=IV_EQ_FV
+  STORM-3072 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=26/2.0.0 | OV=24/1.1.3 | stato=IV_EQ_FV
+  STORM-3070 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=26/2.0.0 | OV=24/1.1.3 | stato=IV_EQ_FV
+  STORM-3065 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=26/2.0.0 | OV=24/1.1.3 | stato=IV_EQ_FV
+  STORM-3063 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=26/2.0.0 | OV=24/1.1.3 | stato=IV_EQ_FV
+Esempi IV_GT_FV (massimo 10 su 23):
+  STORM-2903 | AV dichiarate=[2.0.0, 1.x] | IV scelta=26/2.0.0 | FV=22/1.2.0 | OV=20/1.0.6 | stato=IV_GT_FV
+  STORM-2900 | AV dichiarate=[2.0.0, 1.x] | IV scelta=26/2.0.0 | FV=22/1.2.0 | OV=20/1.0.6 | stato=IV_GT_FV
+  STORM-2876 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=21/1.1.2 | OV=20/1.0.6 | stato=IV_GT_FV
+  STORM-2843 | AV dichiarate=[2.0.0, 1.x] | IV scelta=26/2.0.0 | FV=22/1.2.0 | OV=20/1.0.6 | stato=IV_GT_FV
+  STORM-2750 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=21/1.1.2 | OV=20/1.0.6 | stato=IV_GT_FV
+  STORM-2525 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=21/1.1.2 | OV=17/1.0.4 | stato=IV_GT_FV
+  STORM-2516 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=18/1.1.1 | OV=17/1.0.4 | stato=IV_GT_FV
+  STORM-2488 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=18/1.1.1 | OV=17/1.0.4 | stato=IV_GT_FV
+  STORM-2334 | AV dichiarate=[2.0.0, 1.x] | IV scelta=26/2.0.0 | FV=16/1.1.0 | OV=15/1.0.3 | stato=IV_GT_FV
+  STORM-2320 | AV dichiarate=[2.0.0] | IV scelta=26/2.0.0 | FV=16/1.1.0 | OV=15/1.0.3 | stato=IV_GT_FV
+
+============================================================
+LINEAGE DELLE RELEASE USATE PER PROPORTION
+============================================================
+  STORM-4069 | IV=36/2.6.0 | linea IV=2.6 | OV=39/2.6.3 | linea OV=2.6 | FV=40/2.7.0 | linea FV=2.7 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-4055 | IV=37/2.6.1 | linea IV=2.6 | OV=39/2.6.3 | linea OV=2.6 | FV=40/2.7.0 | linea FV=2.7 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-4052 | IV=37/2.6.1 | linea IV=2.6 | OV=38/2.6.2 | linea OV=2.6 | FV=39/2.6.3 | linea FV=2.6 | SAME_LINE_IV_OV_FV
+  STORM-3823 | IV=30/2.3.0 | linea IV=2.3 | OV=34/2.4.0 | linea OV=2.4 | FV=35/2.5.0 | linea FV=2.5 | ALL_DIFFERENT_LINES
+  STORM-3663 | IV=29/2.2.0 | linea IV=2.2 | OV=29/2.2.0 | linea OV=2.2 | FV=30/2.3.0 | linea FV=2.3 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3658 | IV=26/2.0.0 | linea IV=2.0 | OV=29/2.2.0 | linea OV=2.2 | FV=30/2.3.0 | linea FV=2.3 | ALL_DIFFERENT_LINES
+  STORM-3655 | IV=26/2.0.0 | linea IV=2.0 | OV=29/2.2.0 | linea OV=2.2 | FV=30/2.3.0 | linea FV=2.3 | ALL_DIFFERENT_LINES
+  STORM-3652 | IV=26/2.0.0 | linea IV=2.0 | OV=29/2.2.0 | linea OV=2.2 | FV=30/2.3.0 | linea FV=2.3 | ALL_DIFFERENT_LINES
+  STORM-3649 | IV=26/2.0.0 | linea IV=2.0 | OV=29/2.2.0 | linea OV=2.2 | FV=30/2.3.0 | linea FV=2.3 | ALL_DIFFERENT_LINES
+  STORM-3624 | IV=26/2.0.0 | linea IV=2.0 | OV=29/2.2.0 | linea OV=2.2 | FV=30/2.3.0 | linea FV=2.3 | ALL_DIFFERENT_LINES
+  STORM-3553 | IV=26/2.0.0 | linea IV=2.0 | OV=29/2.2.0 | linea OV=2.2 | FV=30/2.3.0 | linea FV=2.3 | ALL_DIFFERENT_LINES
+  STORM-3523 | IV=26/2.0.0 | linea IV=2.0 | OV=28/2.1.0 | linea OV=2.1 | FV=29/2.2.0 | linea FV=2.2 | ALL_DIFFERENT_LINES
+  STORM-3519 | IV=26/2.0.0 | linea IV=2.0 | OV=28/2.1.0 | linea OV=2.1 | FV=29/2.2.0 | linea FV=2.2 | ALL_DIFFERENT_LINES
+  STORM-3512 | IV=26/2.0.0 | linea IV=2.0 | OV=28/2.1.0 | linea OV=2.1 | FV=29/2.2.0 | linea FV=2.2 | ALL_DIFFERENT_LINES
+  STORM-3511 | IV=26/2.0.0 | linea IV=2.0 | OV=28/2.1.0 | linea OV=2.1 | FV=29/2.2.0 | linea FV=2.2 | ALL_DIFFERENT_LINES
+  STORM-3504 | IV=26/2.0.0 | linea IV=2.0 | OV=28/2.1.0 | linea OV=2.1 | FV=29/2.2.0 | linea FV=2.2 | ALL_DIFFERENT_LINES
+  STORM-3470 | IV=26/2.0.0 | linea IV=2.0 | OV=27/1.2.3 | linea OV=1.2 | FV=28/2.1.0 | linea FV=2.1 | ALL_DIFFERENT_LINES
+  STORM-3466 | IV=26/2.0.0 | linea IV=2.0 | OV=27/1.2.3 | linea OV=1.2 | FV=28/2.1.0 | linea FV=2.1 | ALL_DIFFERENT_LINES
+  STORM-3436 | IV=26/2.0.0 | linea IV=2.0 | OV=27/1.2.3 | linea OV=1.2 | FV=28/2.1.0 | linea FV=2.1 | ALL_DIFFERENT_LINES
+  STORM-3422 | IV=25/1.2.2 | linea IV=1.2 | OV=27/1.2.3 | linea OV=1.2 | FV=28/2.1.0 | linea FV=2.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3408 | IV=26/2.0.0 | linea IV=2.0 | OV=27/1.2.3 | linea OV=1.2 | FV=28/2.1.0 | linea FV=2.1 | ALL_DIFFERENT_LINES
+  STORM-3404 | IV=25/1.2.2 | linea IV=1.2 | OV=27/1.2.3 | linea OV=1.2 | FV=36/2.6.0 | linea FV=2.6 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3390 | IV=26/2.0.0 | linea IV=2.0 | OV=26/2.0.0 | linea OV=2.0 | FV=28/2.1.0 | linea FV=2.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3384 | IV=20/1.0.6 | linea IV=1.0 | OV=26/2.0.0 | linea OV=2.0 | FV=27/1.2.3 | linea FV=1.2 | ALL_DIFFERENT_LINES
+  STORM-3379 | IV=26/2.0.0 | linea IV=2.0 | OV=26/2.0.0 | linea OV=2.0 | FV=28/2.1.0 | linea FV=2.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3376 | IV=26/2.0.0 | linea IV=2.0 | OV=26/2.0.0 | linea OV=2.0 | FV=28/2.1.0 | linea FV=2.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3372 | IV=26/2.0.0 | linea IV=2.0 | OV=26/2.0.0 | linea OV=2.0 | FV=28/2.1.0 | linea FV=2.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3371 | IV=26/2.0.0 | linea IV=2.0 | OV=26/2.0.0 | linea OV=2.0 | FV=28/2.1.0 | linea FV=2.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3090 | IV=16/1.1.0 | linea IV=1.1 | OV=24/1.1.3 | linea OV=1.1 | FV=27/1.2.3 | linea FV=1.2 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3087 | IV=23/1.2.1 | linea IV=1.2 | OV=24/1.1.3 | linea OV=1.1 | FV=26/2.0.0 | linea FV=2.0 | ALL_DIFFERENT_LINES
+  STORM-3082 | IV=23/1.2.1 | linea IV=1.2 | OV=24/1.1.3 | linea OV=1.1 | FV=26/2.0.0 | linea FV=2.0 | ALL_DIFFERENT_LINES
+  STORM-3068 | IV=16/1.1.0 | linea IV=1.1 | OV=24/1.1.3 | linea OV=1.1 | FV=26/2.0.0 | linea FV=2.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3056 | IV=21/1.1.2 | linea IV=1.1 | OV=24/1.1.3 | linea OV=1.1 | FV=26/2.0.0 | linea FV=2.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3047 | IV=21/1.1.2 | linea IV=1.1 | OV=24/1.1.3 | linea OV=1.1 | FV=27/1.2.3 | linea FV=1.2 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-3046 | IV=23/1.2.1 | linea IV=1.2 | OV=24/1.1.3 | linea OV=1.1 | FV=26/2.0.0 | linea FV=2.0 | ALL_DIFFERENT_LINES
+  STORM-3028 | IV=23/1.2.1 | linea IV=1.2 | OV=24/1.1.3 | linea OV=1.1 | FV=26/2.0.0 | linea FV=2.0 | ALL_DIFFERENT_LINES
+  STORM-3013 | IV=23/1.2.1 | linea IV=1.2 | OV=24/1.1.3 | linea OV=1.1 | FV=26/2.0.0 | linea FV=2.0 | ALL_DIFFERENT_LINES
+  STORM-2988 | IV=23/1.2.1 | linea IV=1.2 | OV=24/1.1.3 | linea OV=1.1 | FV=25/1.2.2 | linea FV=1.2 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2942 | IV=16/1.1.0 | linea IV=1.1 | OV=20/1.0.6 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2911 | IV=18/1.1.1 | linea IV=1.1 | OV=20/1.0.6 | linea OV=1.0 | FV=24/1.1.3 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2868 | IV=16/1.1.0 | linea IV=1.1 | OV=20/1.0.6 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2833 | IV=9/1.0.0 | linea IV=1.0 | OV=20/1.0.6 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2811 | IV=16/1.1.0 | linea IV=1.1 | OV=20/1.0.6 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2736 | IV=18/1.1.1 | linea IV=1.1 | OV=19/1.0.5 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2733 | IV=9/1.0.0 | linea IV=1.0 | OV=19/1.0.5 | linea OV=1.0 | FV=26/2.0.0 | linea FV=2.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2724 | IV=17/1.0.4 | linea IV=1.0 | OV=19/1.0.5 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2722 | IV=18/1.1.1 | linea IV=1.1 | OV=19/1.0.5 | linea OV=1.0 | FV=22/1.2.0 | linea FV=1.2 | ALL_DIFFERENT_LINES
+  STORM-2706 | IV=18/1.1.1 | linea IV=1.1 | OV=19/1.0.5 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2691 | IV=18/1.1.1 | linea IV=1.1 | OV=19/1.0.5 | linea OV=1.0 | FV=26/2.0.0 | linea FV=2.0 | ALL_DIFFERENT_LINES
+  STORM-2690 | IV=15/1.0.3 | linea IV=1.0 | OV=19/1.0.5 | linea OV=1.0 | FV=20/1.0.6 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-2675 | IV=16/1.1.0 | linea IV=1.1 | OV=19/1.0.5 | linea OV=1.0 | FV=22/1.2.0 | linea FV=1.2 | ALL_DIFFERENT_LINES
+  STORM-2666 | IV=9/1.0.0 | linea IV=1.0 | OV=18/1.1.1 | linea OV=1.1 | FV=21/1.1.2 | linea FV=1.1 | OV_FV_SAME_LINE_IV_DIFFERENT
+  STORM-2660 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=19/1.0.5 | linea FV=1.0 | OV_FV_SAME_LINE_IV_DIFFERENT
+  STORM-2659 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2652 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2642 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2639 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2608 | IV=7/0.10.0 | linea IV=0.10 | OV=17/1.0.4 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | ALL_DIFFERENT_LINES
+  STORM-2607 | IV=18/1.1.1 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2568 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2549 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=22/1.2.0 | linea FV=1.2 | ALL_DIFFERENT_LINES
+  STORM-2546 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=22/1.2.0 | linea FV=1.2 | ALL_DIFFERENT_LINES
+  STORM-2544 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2541 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2517 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=22/1.2.0 | linea FV=1.2 | ALL_DIFFERENT_LINES
+  STORM-2500 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=21/1.1.2 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2496 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2494 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=22/1.2.0 | linea FV=1.2 | ALL_DIFFERENT_LINES
+  STORM-2489 | IV=12/1.0.2 | linea IV=1.0 | OV=17/1.0.4 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2483 | IV=15/1.0.3 | linea IV=1.0 | OV=17/1.0.4 | linea OV=1.0 | FV=29/2.2.0 | linea FV=2.2 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2475 | IV=9/1.0.0 | linea IV=1.0 | OV=17/1.0.4 | linea OV=1.0 | FV=26/2.0.0 | linea FV=2.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2467 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2449 | IV=16/1.1.0 | linea IV=1.1 | OV=17/1.0.4 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2429 | IV=15/1.0.3 | linea IV=1.0 | OV=16/1.1.0 | linea OV=1.1 | FV=17/1.0.4 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2426 | IV=12/1.0.2 | linea IV=1.0 | OV=16/1.1.0 | linea OV=1.1 | FV=21/1.1.2 | linea FV=1.1 | OV_FV_SAME_LINE_IV_DIFFERENT
+  STORM-2360 | IV=15/1.0.3 | linea IV=1.0 | OV=15/1.0.3 | linea OV=1.0 | FV=17/1.0.4 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-2350 | IV=9/1.0.0 | linea IV=1.0 | OV=15/1.0.3 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2345 | IV=15/1.0.3 | linea IV=1.0 | OV=15/1.0.3 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2343 | IV=16/1.1.0 | linea IV=1.1 | OV=15/1.0.3 | linea OV=1.0 | FV=18/1.1.1 | linea FV=1.1 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2281 | IV=9/1.0.0 | linea IV=1.0 | OV=15/1.0.3 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2270 | IV=8/0.9.6 | linea IV=0.9 | OV=15/1.0.3 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | ALL_DIFFERENT_LINES
+  STORM-2231 | IV=11/1.0.1 | linea IV=1.0 | OV=15/1.0.3 | linea OV=1.0 | FV=19/1.0.5 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-2228 | IV=9/1.0.0 | linea IV=1.0 | OV=15/1.0.3 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2194 | IV=12/1.0.2 | linea IV=1.0 | OV=15/1.0.3 | linea OV=1.0 | FV=17/1.0.4 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-2190 | IV=7/0.10.0 | linea IV=0.10 | OV=15/1.0.3 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | ALL_DIFFERENT_LINES
+  STORM-2095 | IV=9/1.0.0 | linea IV=1.0 | OV=14/0.10.2 | linea OV=0.10 | FV=15/1.0.3 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2087 | IV=12/1.0.2 | linea IV=1.0 | OV=14/0.10.2 | linea OV=0.10 | FV=16/1.1.0 | linea FV=1.1 | ALL_DIFFERENT_LINES
+  STORM-2076 | IV=12/1.0.2 | linea IV=1.0 | OV=13/0.9.7 | linea OV=0.9 | FV=15/1.0.3 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2071 | IV=11/1.0.1 | linea IV=1.0 | OV=13/0.9.7 | linea OV=0.9 | FV=15/1.0.3 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2070 | IV=12/1.0.2 | linea IV=1.0 | OV=13/0.9.7 | linea OV=0.9 | FV=15/1.0.3 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2040 | IV=12/1.0.2 | linea IV=1.0 | OV=13/0.9.7 | linea OV=0.9 | FV=15/1.0.3 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-2023 | IV=9/1.0.0 | linea IV=1.0 | OV=12/1.0.2 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-2017 | IV=11/1.0.1 | linea IV=1.0 | OV=12/1.0.2 | linea OV=1.0 | FV=15/1.0.3 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1995 | IV=7/0.10.0 | linea IV=0.10 | OV=12/1.0.2 | linea OV=1.0 | FV=15/1.0.3 | linea FV=1.0 | OV_FV_SAME_LINE_IV_DIFFERENT
+  STORM-1906 | IV=11/1.0.1 | linea IV=1.0 | OV=12/1.0.2 | linea OV=1.0 | FV=15/1.0.3 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1881 | IV=11/1.0.1 | linea IV=1.0 | OV=12/1.0.2 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1872 | IV=9/1.0.0 | linea IV=1.0 | OV=12/1.0.2 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1849 | IV=9/1.0.0 | linea IV=1.0 | OV=12/1.0.2 | linea OV=1.0 | FV=15/1.0.3 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1841 | IV=11/1.0.1 | linea IV=1.0 | OV=12/1.0.2 | linea OV=1.0 | FV=15/1.0.3 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1837 | IV=9/1.0.0 | linea IV=1.0 | OV=12/1.0.2 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1832 | IV=9/1.0.0 | linea IV=1.0 | OV=12/1.0.2 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1761 | IV=11/1.0.1 | linea IV=1.0 | OV=10/0.10.1 | linea OV=0.10 | FV=12/1.0.2 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-1750 | IV=7/0.10.0 | linea IV=0.10 | OV=10/0.10.1 | linea OV=0.10 | FV=12/1.0.2 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1735 | IV=9/1.0.0 | linea IV=1.0 | OV=10/0.10.1 | linea OV=0.10 | FV=12/1.0.2 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-1733 | IV=4/0.9.3 | linea IV=0.9 | OV=10/0.10.1 | linea OV=0.10 | FV=11/1.0.1 | linea FV=1.0 | ALL_DIFFERENT_LINES
+  STORM-1730 | IV=9/1.0.0 | linea IV=1.0 | OV=10/0.10.1 | linea OV=0.10 | FV=15/1.0.3 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-1729 | IV=9/1.0.0 | linea IV=1.0 | OV=10/0.10.1 | linea OV=0.10 | FV=11/1.0.1 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-1728 | IV=9/1.0.0 | linea IV=1.0 | OV=10/0.10.1 | linea OV=0.10 | FV=12/1.0.2 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-1725 | IV=9/1.0.0 | linea IV=1.0 | OV=10/0.10.1 | linea OV=0.10 | FV=11/1.0.1 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-1714 | IV=9/1.0.0 | linea IV=1.0 | OV=10/0.10.1 | linea OV=0.10 | FV=11/1.0.1 | linea FV=1.0 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-1706 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=11/1.0.1 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1704 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=11/1.0.1 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1696 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=11/1.0.1 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1693 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=11/1.0.1 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1687 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=11/1.0.1 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1683 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=11/1.0.1 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1681 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=11/1.0.1 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1674 | IV=4/0.9.3 | linea IV=0.9 | OV=9/1.0.0 | linea OV=1.0 | FV=12/1.0.2 | linea FV=1.0 | OV_FV_SAME_LINE_IV_DIFFERENT
+  STORM-1645 | IV=7/0.10.0 | linea IV=0.10 | OV=9/1.0.0 | linea OV=1.0 | FV=10/0.10.1 | linea FV=0.10 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-1642 | IV=7/0.10.0 | linea IV=0.10 | OV=9/1.0.0 | linea OV=1.0 | FV=26/2.0.0 | linea FV=2.0 | ALL_DIFFERENT_LINES
+  STORM-1603 | IV=7/0.10.0 | linea IV=0.10 | OV=9/1.0.0 | linea OV=1.0 | FV=10/0.10.1 | linea FV=0.10 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-1575 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=12/1.0.2 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1545 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=26/2.0.0 | linea FV=2.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1544 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=11/1.0.1 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1535 | IV=6/0.9.5 | linea IV=0.9 | OV=9/1.0.0 | linea OV=1.0 | FV=10/0.10.1 | linea FV=0.10 | ALL_DIFFERENT_LINES
+  STORM-1521 | IV=6/0.9.5 | linea IV=0.9 | OV=9/1.0.0 | linea OV=1.0 | FV=26/2.0.0 | linea FV=2.0 | ALL_DIFFERENT_LINES
+  STORM-1515 | IV=5/0.9.4 | linea IV=0.9 | OV=9/1.0.0 | linea OV=1.0 | FV=28/2.1.0 | linea FV=2.1 | ALL_DIFFERENT_LINES
+  STORM-1492 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=26/2.0.0 | linea FV=2.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1363 | IV=10/0.10.1 | linea IV=0.10 | OV=9/1.0.0 | linea OV=1.0 | FV=16/1.1.0 | linea FV=1.1 | ALL_DIFFERENT_LINES
+  STORM-1344 | IV=9/1.0.0 | linea IV=1.0 | OV=9/1.0.0 | linea OV=1.0 | FV=15/1.0.3 | linea FV=1.0 | SAME_LINE_IV_OV_FV
+  STORM-1180 | IV=7/0.10.0 | linea IV=0.10 | OV=7/0.10.0 | linea OV=0.10 | FV=9/1.0.0 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1150 | IV=7/0.10.0 | linea IV=0.10 | OV=7/0.10.0 | linea OV=0.10 | FV=9/1.0.0 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1148 | IV=4/0.9.3 | linea IV=0.9 | OV=7/0.10.0 | linea OV=0.10 | FV=9/1.0.0 | linea FV=1.0 | ALL_DIFFERENT_LINES
+  STORM-1147 | IV=7/0.10.0 | linea IV=0.10 | OV=7/0.10.0 | linea OV=0.10 | FV=9/1.0.0 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1134 | IV=7/0.10.0 | linea IV=0.10 | OV=7/0.10.0 | linea OV=0.10 | FV=9/1.0.0 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-1051 | IV=7/0.10.0 | linea IV=0.10 | OV=7/0.10.0 | linea OV=0.10 | FV=8/0.9.6 | linea FV=0.9 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-996 | IV=7/0.10.0 | linea IV=0.10 | OV=7/0.10.0 | linea OV=0.10 | FV=8/0.9.6 | linea FV=0.9 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-976 | IV=7/0.10.0 | linea IV=0.10 | OV=7/0.10.0 | linea OV=0.10 | FV=9/1.0.0 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-933 | IV=6/0.9.5 | linea IV=0.9 | OV=7/0.10.0 | linea OV=0.10 | FV=8/0.9.6 | linea FV=0.9 | IV_FV_SAME_LINE_OV_DIFFERENT
+  STORM-874 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=7/0.10.0 | linea OV=0.10 | FV=9/1.0.0 | linea FV=1.0 | ALL_DIFFERENT_LINES
+  STORM-839 | IV=5/0.9.4 | linea IV=0.9 | OV=6/0.9.5 | linea OV=0.9 | FV=8/0.9.6 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-818 | IV=4/0.9.3 | linea IV=0.9 | OV=6/0.9.5 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-794 | IV=4/0.9.3 | linea IV=0.9 | OV=6/0.9.5 | linea OV=0.9 | FV=9/1.0.0 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-788 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=6/0.9.5 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-763 | IV=5/0.9.4 | linea IV=0.9 | OV=6/0.9.5 | linea OV=0.9 | FV=8/0.9.6 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-742 | IV=4/0.9.3 | linea IV=0.9 | OV=6/0.9.5 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-740 | IV=5/0.9.4 | linea IV=0.9 | OV=6/0.9.5 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-737 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=6/0.9.5 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-728 | IV=6/0.9.5 | linea IV=0.9 | OV=6/0.9.5 | linea OV=0.9 | FV=8/0.9.6 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-713 | IV=4/0.9.3 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-711 | IV=4/0.9.3 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-695 | IV=4/0.9.3 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=9/1.0.0 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-685 | IV=4/0.9.3 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-659 | IV=4/0.9.3 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-643 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=8/0.9.6 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-633 | IV=4/0.9.3 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-627 | IV=4/0.9.3 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-608 | IV=4/0.9.3 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-586 | IV=4/0.9.3 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-585 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-584 | IV=8/0.9.6 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=9/1.0.0 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-583 | IV=4/0.9.3 | linea IV=0.9 | OV=5/0.9.4 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-574 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=4/0.9.3 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-527 | IV=4/0.9.3 | linea IV=0.9 | OV=4/0.9.3 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-525 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=4/0.9.3 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-503 | IV=2/0.9.1-incubating | linea IV=0.9 | OV=4/0.9.3 | linea OV=0.9 | FV=8/0.9.6 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-477 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=4/0.9.3 | linea OV=0.9 | FV=9/1.0.0 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-468 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=4/0.9.3 | linea OV=0.9 | FV=9/1.0.0 | linea FV=1.0 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-456 | IV=2/0.9.1-incubating | linea IV=0.9 | OV=4/0.9.3 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-442 | IV=4/0.9.3 | linea IV=0.9 | OV=4/0.9.3 | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-372 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=4/0.9.3 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-370 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=4/0.9.3 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-369 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=4/0.9.3 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-356 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=4/0.9.3 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-355 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=4/0.9.3 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-341 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=4/0.9.3 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-330 | IV=2/0.9.1-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=4/0.9.3 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-328 | IV=1/0.9.0.1 | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=4/0.9.3 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-322 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-292 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=7/0.10.0 | linea FV=0.10 | IV_OV_SAME_LINE_FV_DIFFERENT
+  STORM-274 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=4/0.9.3 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-254 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=3/0.9.2-incubating | linea OV=0.9 | FV=4/0.9.3 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+  STORM-130 | IV=3/0.9.2-incubating | linea IV=0.9 | OV=2/0.9.1-incubating | linea OV=0.9 | FV=6/0.9.5 | linea FV=0.9 | SAME_LINE_IV_OV_FV
+SAME_LINE_IV_OV_FV: 35
+IV_FV_SAME_LINE_OV_DIFFERENT: 36
+IV_OV_SAME_LINE_FV_DIFFERENT: 66
+OV_FV_SAME_LINE_IV_DIFFERENT: 5
+ALL_DIFFERENT_LINES: 41
+Ticket IV_GT_OV_USED_FOR_P con linee: 6
+IV_GT_OV_USED_FOR_P: 6
+Esempi IV_GT_OV usati per P (massimo 10):
+  STORM-2607 | IV=18/1.1.1 | OV=17/1.0.4 | FV=21/1.1.2 | P=0.7500
+  STORM-2343 | IV=16/1.1.0 | OV=15/1.0.3 | FV=18/1.1.1 | P=0.6667
+  STORM-1761 | IV=11/1.0.1 | OV=10/0.10.1 | FV=12/1.0.2 | P=0.5000
+  STORM-1363 | IV=10/0.10.1 | OV=9/1.0.0 | FV=16/1.1.0 | P=0.8571
+  STORM-584 | IV=8/0.9.6 | OV=5/0.9.4 | FV=9/1.0.0 | P=0.2500
+  STORM-130 | IV=3/0.9.2-incubating | OV=2/0.9.1-incubating | FV=6/0.9.5 | P=0.7500
+
+============================================================
+ANCESTRY GIT - TUTTI I TICKET USATI PER PROPORTION
+============================================================
+  STORM-4069 | IV=2.6.0 (linea 2.6) | OV=2.6.3 (linea 2.6) | FV=2.7.0 (linea 2.7) | FV descendant of IV: false | FV descendant of OV: true | OV descendant of IV: false | IV descendant of OV: false | OV_FV_CONNECTED_IV_OUTSIDE
+  STORM-4055 | IV=2.6.1 (linea 2.6) | OV=2.6.3 (linea 2.6) | FV=2.7.0 (linea 2.7) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-4052 | IV=2.6.1 (linea 2.6) | OV=2.6.2 (linea 2.6) | FV=2.6.3 (linea 2.6) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3823 | IV=2.3.0 (linea 2.3) | OV=2.4.0 (linea 2.4) | FV=2.5.0 (linea 2.5) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3663 | IV=2.2.0 (linea 2.2) | OV=2.2.0 (linea 2.2) | FV=2.3.0 (linea 2.3) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-3658 | IV=2.0.0 (linea 2.0) | OV=2.2.0 (linea 2.2) | FV=2.3.0 (linea 2.3) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3655 | IV=2.0.0 (linea 2.0) | OV=2.2.0 (linea 2.2) | FV=2.3.0 (linea 2.3) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3652 | IV=2.0.0 (linea 2.0) | OV=2.2.0 (linea 2.2) | FV=2.3.0 (linea 2.3) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3649 | IV=2.0.0 (linea 2.0) | OV=2.2.0 (linea 2.2) | FV=2.3.0 (linea 2.3) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3624 | IV=2.0.0 (linea 2.0) | OV=2.2.0 (linea 2.2) | FV=2.3.0 (linea 2.3) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3553 | IV=2.0.0 (linea 2.0) | OV=2.2.0 (linea 2.2) | FV=2.3.0 (linea 2.3) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3523 | IV=2.0.0 (linea 2.0) | OV=2.1.0 (linea 2.1) | FV=2.2.0 (linea 2.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3519 | IV=2.0.0 (linea 2.0) | OV=2.1.0 (linea 2.1) | FV=2.2.0 (linea 2.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3512 | IV=2.0.0 (linea 2.0) | OV=2.1.0 (linea 2.1) | FV=2.2.0 (linea 2.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3511 | IV=2.0.0 (linea 2.0) | OV=2.1.0 (linea 2.1) | FV=2.2.0 (linea 2.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3504 | IV=2.0.0 (linea 2.0) | OV=2.1.0 (linea 2.1) | FV=2.2.0 (linea 2.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3470 | IV=2.0.0 (linea 2.0) | OV=1.2.3 (linea 1.2) | FV=2.1.0 (linea 2.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-3466 | IV=2.0.0 (linea 2.0) | OV=1.2.3 (linea 1.2) | FV=2.1.0 (linea 2.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-3436 | IV=2.0.0 (linea 2.0) | OV=1.2.3 (linea 1.2) | FV=2.1.0 (linea 2.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-3422 | IV=1.2.2 (linea 1.2) | OV=1.2.3 (linea 1.2) | FV=2.1.0 (linea 2.1) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3408 | IV=2.0.0 (linea 2.0) | OV=1.2.3 (linea 1.2) | FV=2.1.0 (linea 2.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-3404 | IV=1.2.2 (linea 1.2) | OV=1.2.3 (linea 1.2) | FV=2.6.0 (linea 2.6) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3390 | IV=2.0.0 (linea 2.0) | OV=2.0.0 (linea 2.0) | FV=2.1.0 (linea 2.1) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-3384 | IV=1.0.6 (linea 1.0) | OV=2.0.0 (linea 2.0) | FV=1.2.3 (linea 1.2) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3379 | IV=2.0.0 (linea 2.0) | OV=2.0.0 (linea 2.0) | FV=2.1.0 (linea 2.1) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-3376 | IV=2.0.0 (linea 2.0) | OV=2.0.0 (linea 2.0) | FV=2.1.0 (linea 2.1) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-3372 | IV=2.0.0 (linea 2.0) | OV=2.0.0 (linea 2.0) | FV=2.1.0 (linea 2.1) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-3371 | IV=2.0.0 (linea 2.0) | OV=2.0.0 (linea 2.0) | FV=2.1.0 (linea 2.1) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-3090 | IV=1.1.0 (linea 1.1) | OV=1.1.3 (linea 1.1) | FV=1.2.3 (linea 1.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3087 | IV=1.2.1 (linea 1.2) | OV=1.1.3 (linea 1.1) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3082 | IV=1.2.1 (linea 1.2) | OV=1.1.3 (linea 1.1) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3068 | IV=1.1.0 (linea 1.1) | OV=1.1.3 (linea 1.1) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3056 | IV=1.1.2 (linea 1.1) | OV=1.1.3 (linea 1.1) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3047 | IV=1.1.2 (linea 1.1) | OV=1.1.3 (linea 1.1) | FV=1.2.3 (linea 1.2) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3046 | IV=1.2.1 (linea 1.2) | OV=1.1.3 (linea 1.1) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3028 | IV=1.2.1 (linea 1.2) | OV=1.1.3 (linea 1.1) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-3013 | IV=1.2.1 (linea 1.2) | OV=1.1.3 (linea 1.1) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2988 | IV=1.2.1 (linea 1.2) | OV=1.1.3 (linea 1.1) | FV=1.2.2 (linea 1.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2942 | IV=1.1.0 (linea 1.1) | OV=1.0.6 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2911 | IV=1.1.1 (linea 1.1) | OV=1.0.6 (linea 1.0) | FV=1.1.3 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2868 | IV=1.1.0 (linea 1.1) | OV=1.0.6 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2833 | IV=1.0.0 (linea 1.0) | OV=1.0.6 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2811 | IV=1.1.0 (linea 1.1) | OV=1.0.6 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2736 | IV=1.1.1 (linea 1.1) | OV=1.0.5 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2733 | IV=1.0.0 (linea 1.0) | OV=1.0.5 (linea 1.0) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2724 | IV=1.0.4 (linea 1.0) | OV=1.0.5 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2722 | IV=1.1.1 (linea 1.1) | OV=1.0.5 (linea 1.0) | FV=1.2.0 (linea 1.2) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2706 | IV=1.1.1 (linea 1.1) | OV=1.0.5 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2691 | IV=1.1.1 (linea 1.1) | OV=1.0.5 (linea 1.0) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2690 | IV=1.0.3 (linea 1.0) | OV=1.0.5 (linea 1.0) | FV=1.0.6 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-2675 | IV=1.1.0 (linea 1.1) | OV=1.0.5 (linea 1.0) | FV=1.2.0 (linea 1.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2666 | IV=1.0.0 (linea 1.0) | OV=1.1.1 (linea 1.1) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-2660 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.0.5 (linea 1.0) | FV descendant of IV: false | FV descendant of OV: true | OV descendant of IV: false | IV descendant of OV: false | OV_FV_CONNECTED_IV_OUTSIDE
+  STORM-2659 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2652 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2642 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2639 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2608 | IV=0.10.0 (linea 0.10) | OV=1.0.4 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2607 | IV=1.1.1 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2568 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2549 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.2.0 (linea 1.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2546 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.2.0 (linea 1.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2544 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2541 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2517 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.2.0 (linea 1.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2500 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.2 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2496 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2494 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.2.0 (linea 1.2) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2489 | IV=1.0.2 (linea 1.0) | OV=1.0.4 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2483 | IV=1.0.3 (linea 1.0) | OV=1.0.4 (linea 1.0) | FV=2.2.0 (linea 2.2) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2475 | IV=1.0.0 (linea 1.0) | OV=1.0.4 (linea 1.0) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2467 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2449 | IV=1.1.0 (linea 1.1) | OV=1.0.4 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2429 | IV=1.0.3 (linea 1.0) | OV=1.1.0 (linea 1.1) | FV=1.0.4 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2426 | IV=1.0.2 (linea 1.0) | OV=1.1.0 (linea 1.1) | FV=1.1.2 (linea 1.1) | FV descendant of IV: false | FV descendant of OV: true | OV descendant of IV: false | IV descendant of OV: false | OV_FV_CONNECTED_IV_OUTSIDE
+  STORM-2360 | IV=1.0.3 (linea 1.0) | OV=1.0.3 (linea 1.0) | FV=1.0.4 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-2350 | IV=1.0.0 (linea 1.0) | OV=1.0.3 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2345 | IV=1.0.3 (linea 1.0) | OV=1.0.3 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-2343 | IV=1.1.0 (linea 1.1) | OV=1.0.3 (linea 1.0) | FV=1.1.1 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2281 | IV=1.0.0 (linea 1.0) | OV=1.0.3 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2270 | IV=0.9.6 (linea 0.9) | OV=1.0.3 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2231 | IV=1.0.1 (linea 1.0) | OV=1.0.3 (linea 1.0) | FV=1.0.5 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-2228 | IV=1.0.0 (linea 1.0) | OV=1.0.3 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2194 | IV=1.0.2 (linea 1.0) | OV=1.0.3 (linea 1.0) | FV=1.0.4 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-2190 | IV=0.10.0 (linea 0.10) | OV=1.0.3 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2095 | IV=1.0.0 (linea 1.0) | OV=0.10.2 (linea 0.10) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2087 | IV=1.0.2 (linea 1.0) | OV=0.10.2 (linea 0.10) | FV=1.1.0 (linea 1.1) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2076 | IV=1.0.2 (linea 1.0) | OV=0.9.7 (linea 0.9) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2071 | IV=1.0.1 (linea 1.0) | OV=0.9.7 (linea 0.9) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2070 | IV=1.0.2 (linea 1.0) | OV=0.9.7 (linea 0.9) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2040 | IV=1.0.2 (linea 1.0) | OV=0.9.7 (linea 0.9) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-2023 | IV=1.0.0 (linea 1.0) | OV=1.0.2 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-2017 | IV=1.0.1 (linea 1.0) | OV=1.0.2 (linea 1.0) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-1995 | IV=0.10.0 (linea 0.10) | OV=1.0.2 (linea 1.0) | FV=1.0.3 (linea 1.0) | FV descendant of IV: false | FV descendant of OV: true | OV descendant of IV: false | IV descendant of OV: false | OV_FV_CONNECTED_IV_OUTSIDE
+  STORM-1906 | IV=1.0.1 (linea 1.0) | OV=1.0.2 (linea 1.0) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-1881 | IV=1.0.1 (linea 1.0) | OV=1.0.2 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1872 | IV=1.0.0 (linea 1.0) | OV=1.0.2 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1849 | IV=1.0.0 (linea 1.0) | OV=1.0.2 (linea 1.0) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-1841 | IV=1.0.1 (linea 1.0) | OV=1.0.2 (linea 1.0) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-1837 | IV=1.0.0 (linea 1.0) | OV=1.0.2 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1832 | IV=1.0.0 (linea 1.0) | OV=1.0.2 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1761 | IV=1.0.1 (linea 1.0) | OV=0.10.1 (linea 0.10) | FV=1.0.2 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-1750 | IV=0.10.0 (linea 0.10) | OV=0.10.1 (linea 0.10) | FV=1.0.2 (linea 1.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1735 | IV=1.0.0 (linea 1.0) | OV=0.10.1 (linea 0.10) | FV=1.0.2 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-1733 | IV=0.9.3 (linea 0.9) | OV=0.10.1 (linea 0.10) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1730 | IV=1.0.0 (linea 1.0) | OV=0.10.1 (linea 0.10) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-1729 | IV=1.0.0 (linea 1.0) | OV=0.10.1 (linea 0.10) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-1728 | IV=1.0.0 (linea 1.0) | OV=0.10.1 (linea 0.10) | FV=1.0.2 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-1725 | IV=1.0.0 (linea 1.0) | OV=0.10.1 (linea 0.10) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-1714 | IV=1.0.0 (linea 1.0) | OV=0.10.1 (linea 0.10) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-1706 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-1704 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-1696 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-1693 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-1687 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-1683 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-1681 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-1674 | IV=0.9.3 (linea 0.9) | OV=1.0.0 (linea 1.0) | FV=1.0.2 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-1645 | IV=0.10.0 (linea 0.10) | OV=1.0.0 (linea 1.0) | FV=0.10.1 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-1642 | IV=0.10.0 (linea 0.10) | OV=1.0.0 (linea 1.0) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1603 | IV=0.10.0 (linea 0.10) | OV=1.0.0 (linea 1.0) | FV=0.10.1 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-1575 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=1.0.2 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-1545 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-1544 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=1.0.1 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-1535 | IV=0.9.5 (linea 0.9) | OV=1.0.0 (linea 1.0) | FV=0.10.1 (linea 0.10) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1521 | IV=0.9.5 (linea 0.9) | OV=1.0.0 (linea 1.0) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1515 | IV=0.9.4 (linea 0.9) | OV=1.0.0 (linea 1.0) | FV=2.1.0 (linea 2.1) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1492 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=2.0.0 (linea 2.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-1363 | IV=0.10.1 (linea 0.10) | OV=1.0.0 (linea 1.0) | FV=1.1.0 (linea 1.1) | FV descendant of IV: false | FV descendant of OV: true | OV descendant of IV: false | IV descendant of OV: false | OV_FV_CONNECTED_IV_OUTSIDE
+  STORM-1344 | IV=1.0.0 (linea 1.0) | OV=1.0.0 (linea 1.0) | FV=1.0.3 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-1180 | IV=0.10.0 (linea 0.10) | OV=0.10.0 (linea 0.10) | FV=1.0.0 (linea 1.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-1150 | IV=0.10.0 (linea 0.10) | OV=0.10.0 (linea 0.10) | FV=1.0.0 (linea 1.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-1148 | IV=0.9.3 (linea 0.9) | OV=0.10.0 (linea 0.10) | FV=1.0.0 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-1147 | IV=0.10.0 (linea 0.10) | OV=0.10.0 (linea 0.10) | FV=1.0.0 (linea 1.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-1134 | IV=0.10.0 (linea 0.10) | OV=0.10.0 (linea 0.10) | FV=1.0.0 (linea 1.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-1051 | IV=0.10.0 (linea 0.10) | OV=0.10.0 (linea 0.10) | FV=0.9.6 (linea 0.9) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-996 | IV=0.10.0 (linea 0.10) | OV=0.10.0 (linea 0.10) | FV=0.9.6 (linea 0.9) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-976 | IV=0.10.0 (linea 0.10) | OV=0.10.0 (linea 0.10) | FV=1.0.0 (linea 1.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-933 | IV=0.9.5 (linea 0.9) | OV=0.10.0 (linea 0.10) | FV=0.9.6 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: false | IV_FV_CONNECTED_OV_OUTSIDE
+  STORM-874 | IV=0.9.2-incubating (linea 0.9) | OV=0.10.0 (linea 0.10) | FV=1.0.0 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-839 | IV=0.9.4 (linea 0.9) | OV=0.9.5 (linea 0.9) | FV=0.9.6 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-818 | IV=0.9.3 (linea 0.9) | OV=0.9.5 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-794 | IV=0.9.3 (linea 0.9) | OV=0.9.5 (linea 0.9) | FV=1.0.0 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-788 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.5 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-763 | IV=0.9.4 (linea 0.9) | OV=0.9.5 (linea 0.9) | FV=0.9.6 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-742 | IV=0.9.3 (linea 0.9) | OV=0.9.5 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-740 | IV=0.9.4 (linea 0.9) | OV=0.9.5 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-737 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.5 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-728 | IV=0.9.5 (linea 0.9) | OV=0.9.5 (linea 0.9) | FV=0.9.6 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-713 | IV=0.9.3 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-711 | IV=0.9.3 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-695 | IV=0.9.3 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=1.0.0 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-685 | IV=0.9.3 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-659 | IV=0.9.3 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-643 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.9.6 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-633 | IV=0.9.3 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-627 | IV=0.9.3 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-608 | IV=0.9.3 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-586 | IV=0.9.3 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-585 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-584 | IV=0.9.6 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=1.0.0 (linea 1.0) | FV descendant of IV: false | FV descendant of OV: false | OV descendant of IV: false | IV descendant of OV: true | NO_SINGLE_LINEAGE
+  STORM-583 | IV=0.9.3 (linea 0.9) | OV=0.9.4 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: false | OV descendant of IV: true | IV descendant of OV: false | NO_SINGLE_LINEAGE
+  STORM-574 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.3 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-527 | IV=0.9.3 (linea 0.9) | OV=0.9.3 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-525 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.3 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-503 | IV=0.9.1-incubating (linea 0.9) | OV=0.9.3 (linea 0.9) | FV=0.9.6 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-477 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.3 (linea 0.9) | FV=1.0.0 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-468 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.3 (linea 0.9) | FV=1.0.0 (linea 1.0) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-456 | IV=0.9.1-incubating (linea 0.9) | OV=0.9.3 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-442 | IV=0.9.3 (linea 0.9) | OV=0.9.3 (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-372 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.9.3 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-370 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.9.3 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-369 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.9.3 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-356 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.9.3 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-355 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.9.3 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-341 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.9.3 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-330 | IV=0.9.1-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.9.3 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-328 | IV=0.9.0.1 (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.9.3 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: false | LINEAR_IV_OV_FV
+  STORM-322 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-292 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.10.0 (linea 0.10) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-274 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.9.3 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-254 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.2-incubating (linea 0.9) | FV=0.9.3 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: true | IV descendant of OV: true | LINEAR_IV_OV_FV
+  STORM-130 | IV=0.9.2-incubating (linea 0.9) | OV=0.9.1-incubating (linea 0.9) | FV=0.9.5 (linea 0.9) | FV descendant of IV: true | FV descendant of OV: true | OV descendant of IV: false | IV descendant of OV: true | LINEAR_OV_IV_FV
+
+============================================================
+RIEPILOGO LINEAGE GIT
+============================================================
+LINEAR_IV_OV_FV: 50/183 (27.3224%)
+  esempio STORM-4055 | IV=2.6.1 | OV=2.6.3 | FV=2.7.0
+  esempio STORM-3390 | IV=2.0.0 | OV=2.0.0 | FV=2.1.0
+  esempio STORM-3379 | IV=2.0.0 | OV=2.0.0 | FV=2.1.0
+  esempio STORM-3376 | IV=2.0.0 | OV=2.0.0 | FV=2.1.0
+  esempio STORM-3372 | IV=2.0.0 | OV=2.0.0 | FV=2.1.0
+  esempio STORM-3371 | IV=2.0.0 | OV=2.0.0 | FV=2.1.0
+  esempio STORM-2690 | IV=1.0.3 | OV=1.0.5 | FV=1.0.6
+  esempio STORM-2666 | IV=1.0.0 | OV=1.1.1 | FV=1.1.2
+  esempio STORM-2360 | IV=1.0.3 | OV=1.0.3 | FV=1.0.4
+  esempio STORM-2231 | IV=1.0.1 | OV=1.0.3 | FV=1.0.5
+LINEAR_OV_IV_FV: 1/183 (0.5464%)
+  esempio STORM-130 | IV=0.9.2-incubating | OV=0.9.1-incubating | FV=0.9.5
+IV_FV_CONNECTED_OV_OUTSIDE: 45/183 (24.5902%)
+  esempio STORM-3470 | IV=2.0.0 | OV=1.2.3 | FV=2.1.0
+  esempio STORM-3466 | IV=2.0.0 | OV=1.2.3 | FV=2.1.0
+  esempio STORM-3436 | IV=2.0.0 | OV=1.2.3 | FV=2.1.0
+  esempio STORM-3408 | IV=2.0.0 | OV=1.2.3 | FV=2.1.0
+  esempio STORM-2988 | IV=1.2.1 | OV=1.1.3 | FV=1.2.2
+  esempio STORM-2942 | IV=1.1.0 | OV=1.0.6 | FV=1.1.2
+  esempio STORM-2911 | IV=1.1.1 | OV=1.0.6 | FV=1.1.3
+  esempio STORM-2868 | IV=1.1.0 | OV=1.0.6 | FV=1.1.2
+  esempio STORM-2811 | IV=1.1.0 | OV=1.0.6 | FV=1.1.2
+  esempio STORM-2736 | IV=1.1.1 | OV=1.0.5 | FV=1.1.2
+OV_FV_CONNECTED_IV_OUTSIDE: 5/183 (2.7322%)
+  esempio STORM-4069 | IV=2.6.0 | OV=2.6.3 | FV=2.7.0
+  esempio STORM-2660 | IV=1.1.0 | OV=1.0.4 | FV=1.0.5
+  esempio STORM-2426 | IV=1.0.2 | OV=1.1.0 | FV=1.1.2
+  esempio STORM-1995 | IV=0.10.0 | OV=1.0.2 | FV=1.0.3
+  esempio STORM-1363 | IV=0.10.1 | OV=1.0.0 | FV=1.1.0
+NO_SINGLE_LINEAGE: 82/183 (44.8087%)
+  esempio STORM-4052 | IV=2.6.1 | OV=2.6.2 | FV=2.6.3
+  esempio STORM-3823 | IV=2.3.0 | OV=2.4.0 | FV=2.5.0
+  esempio STORM-3663 | IV=2.2.0 | OV=2.2.0 | FV=2.3.0
+  esempio STORM-3658 | IV=2.0.0 | OV=2.2.0 | FV=2.3.0
+  esempio STORM-3655 | IV=2.0.0 | OV=2.2.0 | FV=2.3.0
+  esempio STORM-3652 | IV=2.0.0 | OV=2.2.0 | FV=2.3.0
+  esempio STORM-3649 | IV=2.0.0 | OV=2.2.0 | FV=2.3.0
+  esempio STORM-3624 | IV=2.0.0 | OV=2.2.0 | FV=2.3.0
+  esempio STORM-3553 | IV=2.0.0 | OV=2.2.0 | FV=2.3.0
+  esempio STORM-3523 | IV=2.0.0 | OV=2.1.0 | FV=2.2.0
+
+============================================================
+DISTANZE DI RELEASE SULLA CATENA GIT - LINEAR_IV_OV_FV
+============================================================
+  STORM-4055 | IV->FV catena=2 globale=3 | OV->FV catena=1 globale=1 | diverso=true
+  STORM-3390 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-3379 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-3376 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-3372 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-3371 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-2690 | IV->FV catena=3 globale=5 | OV->FV catena=1 globale=1 | diverso=true
+  STORM-2666 | IV->FV catena=4 globale=12 | OV->FV catena=1 globale=3 | diverso=true
+  STORM-2360 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-2231 | IV->FV catena=4 globale=8 | OV->FV catena=2 globale=4 | diverso=true
+  STORM-2194 | IV->FV catena=2 globale=5 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-2017 | IV->FV catena=2 globale=4 | OV->FV catena=1 globale=3 | diverso=true
+  STORM-1906 | IV->FV catena=2 globale=4 | OV->FV catena=1 globale=3 | diverso=true
+  STORM-1849 | IV->FV catena=3 globale=6 | OV->FV catena=1 globale=3 | diverso=true
+  STORM-1841 | IV->FV catena=2 globale=4 | OV->FV catena=1 globale=3 | diverso=true
+  STORM-1706 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-1704 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-1696 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-1693 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-1687 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-1683 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-1681 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-1674 | IV->FV catena=3 globale=8 | OV->FV catena=2 globale=3 | diverso=true
+  STORM-1575 | IV->FV catena=2 globale=3 | OV->FV catena=2 globale=3 | diverso=true
+  STORM-1544 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-1344 | IV->FV catena=3 globale=6 | OV->FV catena=3 globale=6 | diverso=true
+  STORM-839 | IV->FV catena=2 globale=3 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-763 | IV->FV catena=2 globale=3 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-728 | IV->FV catena=1 globale=2 | OV->FV catena=1 globale=2 | diverso=true
+  STORM-643 | IV->FV catena=4 globale=5 | OV->FV catena=2 globale=3 | diverso=true
+  STORM-574 | IV->FV catena=2 globale=4 | OV->FV catena=1 globale=3 | diverso=true
+  STORM-527 | IV->FV catena=1 globale=3 | OV->FV catena=1 globale=3 | diverso=true
+  STORM-525 | IV->FV catena=2 globale=4 | OV->FV catena=1 globale=3 | diverso=true
+  STORM-503 | IV->FV catena=5 globale=6 | OV->FV catena=3 globale=4 | diverso=true
+  STORM-477 | IV->FV catena=2 globale=6 | OV->FV catena=1 globale=5 | diverso=true
+  STORM-468 | IV->FV catena=2 globale=6 | OV->FV catena=1 globale=5 | diverso=true
+  STORM-456 | IV->FV catena=3 globale=5 | OV->FV catena=1 globale=3 | diverso=true
+  STORM-442 | IV->FV catena=1 globale=3 | OV->FV catena=1 globale=3 | diverso=true
+  STORM-372 | IV->FV catena=1 globale=1 | OV->FV catena=1 globale=1 | diverso=false
+  STORM-370 | IV->FV catena=1 globale=1 | OV->FV catena=1 globale=1 | diverso=false
+  STORM-369 | IV->FV catena=1 globale=1 | OV->FV catena=1 globale=1 | diverso=false
+  STORM-356 | IV->FV catena=1 globale=1 | OV->FV catena=1 globale=1 | diverso=false
+  STORM-355 | IV->FV catena=1 globale=1 | OV->FV catena=1 globale=1 | diverso=false
+  STORM-341 | IV->FV catena=1 globale=1 | OV->FV catena=1 globale=1 | diverso=false
+  STORM-330 | IV->FV catena=2 globale=2 | OV->FV catena=1 globale=1 | diverso=false
+  STORM-328 | IV->FV catena=3 globale=3 | OV->FV catena=1 globale=1 | diverso=false
+  STORM-322 | IV->FV catena=2 globale=4 | OV->FV catena=2 globale=4 | diverso=true
+  STORM-292 | IV->FV catena=2 globale=4 | OV->FV catena=2 globale=4 | diverso=true
+  STORM-274 | IV->FV catena=1 globale=1 | OV->FV catena=1 globale=1 | diverso=false
+  STORM-254 | IV->FV catena=1 globale=1 | OV->FV catena=1 globale=1 | diverso=false
+LINEAR_IV_OV_FV con almeno una distanza diversa: 40/50
+P min=0.2500 | max=12.0000 | mediana=1.5000
+[OK] P_total (media): 2.2272
+P > 1: 137 | P == 0: 0 | P negativi: 0
+Campioni P:
+  STORM-4069 | IV=36/2.6.0 | OV=39/2.6.3 | FV=40/2.7.0 | P=4.0000
+  STORM-4055 | IV=37/2.6.1 | OV=39/2.6.3 | FV=40/2.7.0 | P=3.0000
+  STORM-4052 | IV=37/2.6.1 | OV=38/2.6.2 | FV=39/2.6.3 | P=2.0000
+  STORM-3823 | IV=30/2.3.0 | OV=34/2.4.0 | FV=35/2.5.0 | P=5.0000
+  STORM-3663 | IV=29/2.2.0 | OV=29/2.2.0 | FV=30/2.3.0 | P=1.0000
+  STORM-3658 | IV=26/2.0.0 | OV=29/2.2.0 | FV=30/2.3.0 | P=4.0000
+  STORM-3655 | IV=26/2.0.0 | OV=29/2.2.0 | FV=30/2.3.0 | P=4.0000
+  STORM-3652 | IV=26/2.0.0 | OV=29/2.2.0 | FV=30/2.3.0 | P=4.0000
+  STORM-3649 | IV=26/2.0.0 | OV=29/2.2.0 | FV=30/2.3.0 | P=4.0000
+  STORM-3624 | IV=26/2.0.0 | OV=29/2.2.0 | FV=30/2.3.0 | P=4.0000
+Stime per ticket senza AV:
+  STORM-4085 | FV_LT_OV | IV non stimabile
+  STORM-4051 | raw IV=36.7728 | rounded index=37 | release scelta=2.6.1
+  STORM-4037 | FV_EQ_OV | IV non stimabile
+  STORM-3924 | raw IV=33.7728 | rounded index=34 | release scelta=2.4.0
+  STORM-3876 | NO_FV
+  STORM-3875 | FV_EQ_OV | IV non stimabile
+  STORM-3838 | FV_EQ_OV | IV non stimabile
+  STORM-3822 | raw IV=32.7728 | rounded index=33 | release scelta=2.1.1
+  STORM-3819 | NO_FV
+  STORM-3775 | FV_EQ_OV | IV non stimabile

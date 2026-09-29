@@ -1,6 +1,9 @@
 import config.Config;
 import labeling.BuggyLabeler;
+import labeling.HistoricalSzzClassResolver;
 import labeling.SzzAnalyzer;
+import labeling.SzzClassEvidence;
+import labeling.SzzDiagnosticResult;
 import manager.checkoutManager.CheckoutManager;
 import manager.commitManager.CommitManager;
 import manager.csvManager.CsvManager;
@@ -181,7 +184,7 @@ public final class DatasetBuilder {
          * ticket -> classe -> bug-inducing commit
          */
 
-        Map<String, Map<String, Set<RevCommit>>> inducingCommits =
+        Map<String, Map<String, SzzClassEvidence>> szzEvidenceByTicket =
                 new LinkedHashMap<>();
 
         try (Repository repository =
@@ -207,7 +210,7 @@ public final class DatasetBuilder {
                  *
                  * classe -> inducing commits
                  */
-                Map<String, Set<RevCommit>> ticketInducing =
+                Map<String, SzzClassEvidence> ticketEvidence =
                         new LinkedHashMap<>();
 
                 /*
@@ -217,31 +220,47 @@ public final class DatasetBuilder {
                 for (RevCommit fixingCommit :
                         fixingCommits) {
 
-                    Map<String, Set<RevCommit>> found =
-                            szzAnalyzer
-                                    .findInducingCommits(
-                                            fixingCommit);
+                    /*
+                     * Oltre ai commit inducing conserviamo il source path
+                     * della riga blamed. Il blame segue i rename soltanto per
+                     * ottenere questa evidenza storica: la decisione finale
+                     * resta prudente e viene verificata sul tag della release.
+                     */
+                    SzzDiagnosticResult result = szzAnalyzer
+                            .analyseFixingCommitWithSourcePaths(fixingCommit);
+
+                    Map<String, Set<String>> sourcePathsByClass = new LinkedHashMap<>();
+                    result.analysedLines().forEach(line -> {
+                        if (line.inducingCommitId().equals("<nessun commit>")
+                                || line.sourcePath() == null
+                                || line.sourcePath().isBlank()) {
+                            return;
+                        }
+                        sourcePathsByClass.computeIfAbsent(line.filePath(), ignored -> new LinkedHashSet<>())
+                                .add(line.sourcePath());
+                    });
 
                     /*
                      * Uniamo i risultati senza perdere
                      * l'associazione con la singola classe.
                      */
-                    for (Map.Entry<String, Set<RevCommit>> entry :
-                            found.entrySet()) {
-
-                        ticketInducing
-                                .computeIfAbsent(
-                                        entry.getKey(),
-                                        ignored ->
-                                                new LinkedHashSet<>())
-                                .addAll(
-                                        entry.getValue());
+                    for (Map.Entry<String, Set<RevCommit>> entry : result.inducingCommitsByClass().entrySet()) {
+                        SzzClassEvidence previous = ticketEvidence.get(entry.getKey());
+                        Set<RevCommit> inducing = new LinkedHashSet<>(entry.getValue());
+                        Set<String> sourcePaths = new LinkedHashSet<>(
+                                sourcePathsByClass.getOrDefault(entry.getKey(), Set.of()));
+                        if (previous != null) {
+                            inducing.addAll(previous.inducingCommits());
+                            sourcePaths.addAll(previous.sourcePaths());
+                        }
+                        ticketEvidence.put(entry.getKey(), new SzzClassEvidence(
+                                entry.getKey(), inducing, sourcePaths));
                     }
                 }
 
-                inducingCommits.put(
+                szzEvidenceByTicket.put(
                         ticket.key(),
-                        ticketInducing);
+                        ticketEvidence);
 
                 processedTickets++;
 
@@ -276,10 +295,10 @@ public final class DatasetBuilder {
         BuggyLabeler buggyLabeler =
                 new BuggyLabeler();
 
-        buggyLabeler.labelBugs(
+        buggyLabeler.labelBugsWithEvidence(
                 fixedTickets,
                 releases,
-                inducingCommits
+                szzEvidenceByTicket
         );
 
         /*
@@ -288,9 +307,10 @@ public final class DatasetBuilder {
          * ============================================================
          */
 
-        try (CsvManager csvManager =
-                     new CsvManager(
-                             Config.DATASET_CSV)) {
+        try (CsvManager csvManager = new CsvManager(Config.DATASET_CSV);
+             Repository repository = Utils.GitRepositoryUtils.openRepository();
+             HistoricalSzzClassResolver historicalResolver =
+                     new HistoricalSzzClassResolver(repository)) {
 
             csvManager.createCsv();
             csvManager.writeHeader();
@@ -377,15 +397,33 @@ public final class DatasetBuilder {
                  * Applichiamo ora il labeling corretto
                  * classe per classe.
                  */
-                rows =
-                        rows.stream()
-                                .map(row ->
-                                        row.withBuggy(
-                                                buggyLabeler
-                                                        .isBuggy(
-                                                                release,
-                                                                row.classPath())))
-                                .toList();
+                Set<String> productionPaths = rows.stream()
+                        .map(CsvRow::classPath)
+                        .collect(Collectors.toCollection(LinkedHashSet::new));
+
+                HistoricalSzzClassResolver.ResolutionResult resolved =
+                        historicalResolver.resolve(
+                                release,
+                                releaseCommit,
+                                productionPaths,
+                                buggyLabeler.getCandidates(release));
+
+                rows = rows.stream()
+                        .map(row -> row.withBuggy(
+                                resolved.buggyPaths().contains(row.classPath())))
+                        .toList();
+
+                HistoricalSzzClassResolver.ResolutionStatistics resolutionStats =
+                        resolved.statistics();
+                System.out.println("Risoluzione storica classi SZZ: candidati="
+                        + resolutionStats.totalCandidates()
+                        + " | PRE_INDUCING=" + resolutionStats.preInducing()
+                        + " | INDUCING_NON_RAGGIUNGIBILE=" + resolutionStats.inducingNotReachable()
+                        + " | EXACT=" + resolutionStats.exactPath()
+                        + " | SOURCE=" + resolutionStats.sourcePath()
+                        + " | UNIQUE_SIMPLE_NAME=" + resolutionStats.uniqueSimpleName()
+                        + " | AMBIGUOUS=" + resolutionStats.ambiguous()
+                        + " | NOT_FOUND=" + resolutionStats.notFound());
 
                 /*
                  * Controlliamo quante classi vengono

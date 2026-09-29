@@ -10,7 +10,7 @@ import java.nio.file.Path;
 public final class Config {
     public static final String PROJECT_KEY = "STORM";
     public static final URIHolder JIRA = new URIHolder("https://issues.apache.org/jira/rest/api/2");
-    public static final Path REPOSITORY = Path.of("C:", "Users", "andre", "Desktop", "ISW2", "storm");
+    public static final Path REPOSITORY = Path.of("C:", "Users", "andre", "Desktop", "ISW2", "storm-clean");
     public static final Path OUTPUT = Path.of("output", "storm");
     public static final Path RELEASES_CSV = OUTPUT.resolve("storm_releases.csv");
     public static final Path TICKETS_CSV = OUTPUT.resolve("storm_tickets.csv");

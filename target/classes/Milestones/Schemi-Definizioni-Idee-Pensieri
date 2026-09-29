@@ -1,6 +1,6 @@
                     ┌── CK ──────────────┐
                     │                    │
-Release → Checkout → Scanner → Metriche ├→ CsvRow → CSV
+Release → Checkout → Scanner → Metriche  ├→ CsvRow → CSV
                     │                    │
                     ├── PMD ─────────────┤
                     │                    │
@@ -50,3 +50,62 @@ variabilità del change set
 numero di volte in cui la classe è stata modificata insieme a classi già buggy
 metriche CK: CBO, WMC, RFC, LCOM, DIT, NOC, ecc.
 NSmells da PMD
+
+1.2.1  commitDate=2018-02-16  releaseDate=2018-02-15  delta=-1
+2.7.0  commitDate=2024-10-11  releaseDate=2024-09-03  delta=-38
+1.2.1 -> WARN lieve
+2.7.0 -> WARN da investigare
+
+1193 ticket analizzati
+1058 con fixing commit
+135 senza fixing commit
+2636 fixing commit totali
+media 2.2096 commit/ticket
+massimo 29
+
+Circa l’11.3% dei ticket non può entrare in SZZ perché manca il fixing commit associato
+
+//=======================================================
+Code smell nelle classi generated/
+Durante il calcolo di NSmells con PMD è emerso che molte delle classi con il numero più alto di smell appartengono a cartelle generated/, ad esempio:
+storm-core/src/jvm/backtype/storm/generated/Nimbus.java -> 1204 smell
+
+Queste classi sono tipicamente codice generato automaticamente da tool o processi di code generation, quindi non sono necessariamente scritte e manutenute manualmente dagli sviluppatori come il normale codice applicativo.
+PMD, però, le analizza comunque come normali file Java. Di conseguenza può segnalare moltissime violazioni, soprattutto su file molto grandi o ripetitivi, facendo aumentare fortemente NSmells.
+Questo crea un possibile problema nel dataset: il numero di smell potrebbe riflettere in parte le caratteristiche del codice generato, e non soltanto la qualità del codice scritto dagli sviluppatori. Gli outlier possono inoltre influenzare distribuzioni, medie e successivamente il comportamento dei classificatori.
+Importante: un valore molto alto di NSmells in una classe generated non significa necessariamente che PMD stia sbagliando. PMD sta semplicemente applicando le stesse regole a quel codice. Il problema è piuttosto stabilire se quel tipo di file debba essere incluso nel dataset.
+La scelta corretta dipende dalla definizione della popolazione richiesta dal progetto:
+- se la consegna richiede tutte le classi Java presenti nella release, le classi generated/ possono essere mantenute;
+- se si vuole analizzare soltanto il codice effettivamente sviluppato e manutenuto dagli sviluppatori, il codice generato potrebbe essere escluso.
+Per questo motivo non va eliminato automaticamente solo perché produce molti smell: la decisione deve essere coerente con la specifica del progetto e va documentata.
+
+Aggiungerei anche questa osservazione pratica:
+NSmells medio = 9.44
+Nimbus.java generated = 1204
+
+Quindi Nimbus.java è un outlier enorme rispetto alla maggior parte delle classi. Anche se resta nel dataset, va almeno tenuto presente durante l'analisi esplorativa e nella fase ML.
+
+// ticket =======================================================
+AV + FV presenti = 730
+solo AV          = 745 - 730 = 15
+solo FV          = 1146 - 730 = 416
+né AV né FV      = 32
+
+730 + 15 + 416 + 32 = 1193 tickets
+
+//=====
+1193/1193 Type = Bug
+1193/1193 Resolution = Fixed
+105 Closed + 1088 Resolved = 1193
+0 creationDate nulle
+0 resolutionDate nulle
+
+// =====
+1193 ticket
+1190 con OV
+3 OV_AFTER_CORPUS
+0 NO_OV veri
+
+352 FV <= OV
+ ├─ 343 FV == OV
+ └─   9 FV < OV

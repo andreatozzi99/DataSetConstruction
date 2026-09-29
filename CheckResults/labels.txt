@@ -1,0 +1,130 @@
+Risultato salvato in: C:\Users\andre\Desktop\ISW2\DataSetConstruction\CheckResults\labels.txt
+Comando: labels | avvio: 2026-09-29T15:24:08.957867100
+
+============================================================
+BUGGY LABELER - CAMPIONE MIRATO SULLE RELEASE TRAINING (3 TICKET)
+============================================================
+Criterio campione: [IV,FV) interseca le 14 training release e il ticket possiede fixing commit.
+Ticket STORM-3132 | ruoli=[PROPORTION_INTERSECTA_TRAINING] | fixing commit=1
+  classi SZZ=[storm-client/src/jvm/org/apache/storm/tuple/Values.java]
+  IV=13/0.9.7 | fonte IV=PROPORTION | OV=26/2.0.0 | FV=37/2.6.1 | AV=[] | stato FV=RESOLVED
+  Intervallo buggy: [13, 37)
+  ticket=STORM-3132 | class=storm-client/src/jvm/org/apache/storm/tuple/Values.java | IV=0.9.7 | fonte IV=PROPORTION | FV=2.6.1 | releases marcate buggy=[0.9.7, 0.10.2, 1.0.3, 1.1.0, 1.0.4, 1.1.1, 1.0.5, 1.0.6, 1.1.2, 1.2.0, 1.2.1, 1.1.3, 1.2.2, 2.0.0, 1.2.3, 2.1.0, 2.2.0, 2.3.0, 1.2.4, 2.2.1, 2.1.1, 2.4.0, 2.5.0, 2.6.0]
+Ticket STORM-3052 | ruoli=[AV_INTERSECTA_TRAINING] | fixing commit=1
+  classi SZZ=[storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java, storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java]
+  IV=9/1.0.0 | fonte IV=AFFECTED_VERSION | OV=24/1.1.3 | FV=24/1.1.3 | AV=[1.0.0] | stato FV=RESOLVED
+  Intervallo buggy: [9, 24)
+  ticket=STORM-3052 | class=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | IV=1.0.0 | fonte IV=AFFECTED_VERSION | FV=1.1.3 | releases marcate buggy=[1.0.0, 0.10.1, 1.0.1, 1.0.2, 0.9.7, 0.10.2, 1.0.3, 1.1.0, 1.0.4, 1.1.1, 1.0.5, 1.0.6, 1.1.2, 1.2.0, 1.2.1]
+  ticket=STORM-3052 | class=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | IV=1.0.0 | fonte IV=AFFECTED_VERSION | FV=1.1.3 | releases marcate buggy=[1.0.0, 0.10.1, 1.0.1, 1.0.2, 0.9.7, 0.10.2, 1.0.3, 1.1.0, 1.0.4, 1.1.1, 1.0.5, 1.0.6, 1.1.2, 1.2.0, 1.2.1]
+Ticket STORM-2950 | ruoli=[MULTI_FIXING_COMMIT] | fixing commit=2
+  classi SZZ=[storm-client/src/jvm/org/apache/storm/utils/TupleUtils.java]
+  IV=13/0.9.7 | fonte IV=PROPORTION | OV=20/1.0.6 | FV=26/2.0.0 | AV=[] | stato FV=RESOLVED
+  Intervallo buggy: [13, 26)
+  ticket=STORM-2950 | class=storm-client/src/jvm/org/apache/storm/utils/TupleUtils.java | IV=0.9.7 | fonte IV=PROPORTION | FV=2.0.0 | releases marcate buggy=[0.9.7, 0.10.2, 1.0.3, 1.1.0, 1.0.4, 1.1.1, 1.0.5, 1.0.6, 1.1.2, 1.2.0, 1.2.1, 1.1.3, 1.2.2]
+Proportion Total: 2.227200326971935
+
+============================================================
+COLLEGAMENTO SZZ -> SCANNER -> CSV SULLE RELEASE TRAINING
+============================================================
+EXACT_PATH_FOUND confronta letteralmente il path SZZ con JavaClassScanner.
+CSV_ROW_PERSISTED legge il CSV attuale. TEMPORAL_CANDIDATE mostra solo [IV,FV); il riepilogo successivo applica anche ancestry e resolver storico, come DatasetBuilder.
+ticket=STORM-3132 | release=0.9.7 | SZZ path=storm-client/src/jvm/org/apache/storm/tuple/Values.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (1): [storm-core/src/jvm/backtype/storm/tuple/Values.java]
+  candidate stessa simple class name (1): [storm-core/src/jvm/backtype/storm/tuple/Values.java]
+  candidate stesso package/class name (org/apache/storm/tuple/Values.java) (0): []
+ticket=STORM-3132 | release=0.10.2 | SZZ path=storm-client/src/jvm/org/apache/storm/tuple/Values.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (1): [storm-core/src/jvm/backtype/storm/tuple/Values.java]
+  candidate stessa simple class name (1): [storm-core/src/jvm/backtype/storm/tuple/Values.java]
+  candidate stesso package/class name (org/apache/storm/tuple/Values.java) (0): []
+ticket=STORM-3052 | release=1.0.0 | SZZ path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (1): [storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java]
+  candidate stessa simple class name (1): [storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java]
+  candidate stesso package/class name (org/apache/storm/localizer/LocalizedResource.java) (1): [storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java]
+ticket=STORM-3052 | release=0.10.1 | SZZ path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (0): []
+  candidate stessa simple class name (0): []
+  candidate stesso package/class name (org/apache/storm/localizer/LocalizedResource.java) (0): []
+ticket=STORM-3052 | release=1.0.1 | SZZ path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (1): [storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java]
+  candidate stessa simple class name (1): [storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java]
+  candidate stesso package/class name (org/apache/storm/localizer/LocalizedResource.java) (1): [storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java]
+ticket=STORM-3052 | release=1.0.2 | SZZ path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (1): [storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java]
+  candidate stessa simple class name (1): [storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java]
+  candidate stesso package/class name (org/apache/storm/localizer/LocalizedResource.java) (1): [storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java]
+ticket=STORM-3052 | release=0.9.7 | SZZ path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (0): []
+  candidate stessa simple class name (0): []
+  candidate stesso package/class name (org/apache/storm/localizer/LocalizedResource.java) (0): []
+ticket=STORM-3052 | release=0.10.2 | SZZ path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (0): []
+  candidate stessa simple class name (0): []
+  candidate stesso package/class name (org/apache/storm/localizer/LocalizedResource.java) (0): []
+ticket=STORM-3052 | release=1.0.0 | SZZ path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (0): []
+  candidate stessa simple class name (0): []
+  candidate stesso package/class name (org/apache/storm/utils/ServerUtils.java) (0): []
+ticket=STORM-3052 | release=0.10.1 | SZZ path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (0): []
+  candidate stessa simple class name (0): []
+  candidate stesso package/class name (org/apache/storm/utils/ServerUtils.java) (0): []
+ticket=STORM-3052 | release=1.0.1 | SZZ path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (0): []
+  candidate stessa simple class name (0): []
+  candidate stesso package/class name (org/apache/storm/utils/ServerUtils.java) (0): []
+ticket=STORM-3052 | release=1.0.2 | SZZ path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (0): []
+  candidate stessa simple class name (0): []
+  candidate stesso package/class name (org/apache/storm/utils/ServerUtils.java) (0): []
+ticket=STORM-3052 | release=0.9.7 | SZZ path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (0): []
+  candidate stessa simple class name (0): []
+  candidate stesso package/class name (org/apache/storm/utils/ServerUtils.java) (0): []
+ticket=STORM-3052 | release=0.10.2 | SZZ path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (0): []
+  candidate stessa simple class name (0): []
+  candidate stesso package/class name (org/apache/storm/utils/ServerUtils.java) (0): []
+ticket=STORM-2950 | release=0.9.7 | SZZ path=storm-client/src/jvm/org/apache/storm/utils/TupleUtils.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (0): []
+  candidate stessa simple class name (0): []
+  candidate stesso package/class name (org/apache/storm/utils/TupleUtils.java) (0): []
+ticket=STORM-2950 | release=0.10.2 | SZZ path=storm-client/src/jvm/org/apache/storm/utils/TupleUtils.java | RELEASE_IN_BUGGY_INTERVAL=true | EXACT_PATH_FOUND=false | CLASS_EXISTS_IN_RELEASE=false | CSV_ROW_PERSISTED=<assente> | TEMPORAL_CANDIDATE=true
+  candidate stesso filename (1): [storm-core/src/jvm/backtype/storm/utils/TupleUtils.java]
+  candidate stessa simple class name (1): [storm-core/src/jvm/backtype/storm/utils/TupleUtils.java]
+  candidate stesso package/class name (org/apache/storm/utils/TupleUtils.java) (0): []
+
+============================================================
+LABELING FINALE DEL CAMPIONE: ANCESTRY E PATH STORICI
+============================================================
+release=0.9.0.1 | candidati Jira=0 | PRE_INDUCING=0 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=0.9.1-incubating | candidati Jira=0 | PRE_INDUCING=0 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=0.9.2-incubating | candidati Jira=0 | PRE_INDUCING=0 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=0.9.3 | candidati Jira=0 | PRE_INDUCING=0 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=0.9.4 | candidati Jira=0 | PRE_INDUCING=0 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=0.9.5 | candidati Jira=0 | PRE_INDUCING=0 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=0.10.0 | candidati Jira=0 | PRE_INDUCING=0 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=0.9.6 | candidati Jira=0 | PRE_INDUCING=0 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=1.0.0 | candidati Jira=2 | PRE_INDUCING=2 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=0.10.1 | candidati Jira=2 | PRE_INDUCING=2 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=1.0.1 | candidati Jira=2 | PRE_INDUCING=2 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=1.0.2 | candidati Jira=2 | PRE_INDUCING=2 | NON_RAGGIUNGIBILE=0 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=0.9.7 | candidati Jira=4 | PRE_INDUCING=3 | NON_RAGGIUNGIBILE=1 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+release=0.10.2 | candidati Jira=4 | PRE_INDUCING=3 | NON_RAGGIUNGIBILE=1 | EXACT=0 | SOURCE=0 | UNIQUE=0 | AMBIGUOUS=0 | NOT_FOUND=0 | CsvRow buggy=0
+
+============================================================
+RIEPILOGO LABELING PER RELEASE TRAINING - CAMPIONE 3 TICKET
+============================================================
+release=0.9.0.1 | classi buggy=0 | classi non-buggy=449 | totale classi=449 | percentuale buggy=0.0000%
+release=0.9.1-incubating | classi buggy=0 | classi non-buggy=450 | totale classi=450 | percentuale buggy=0.0000%
+release=0.9.2-incubating | classi buggy=0 | classi non-buggy=525 | totale classi=525 | percentuale buggy=0.0000%
+release=0.9.3 | classi buggy=0 | classi non-buggy=605 | totale classi=605 | percentuale buggy=0.0000%
+release=0.9.4 | classi buggy=0 | classi non-buggy=606 | totale classi=606 | percentuale buggy=0.0000%
+release=0.9.5 | classi buggy=0 | classi non-buggy=606 | totale classi=606 | percentuale buggy=0.0000%
+release=0.10.0 | classi buggy=0 | classi non-buggy=807 | totale classi=807 | percentuale buggy=0.0000%
+release=0.9.6 | classi buggy=0 | classi non-buggy=607 | totale classi=607 | percentuale buggy=0.0000%
+release=1.0.0 | classi buggy=0 | classi non-buggy=1261 | totale classi=1261 | percentuale buggy=0.0000%
+release=0.10.1 | classi buggy=0 | classi non-buggy=807 | totale classi=807 | percentuale buggy=0.0000%
+release=1.0.1 | classi buggy=0 | classi non-buggy=1264 | totale classi=1264 | percentuale buggy=0.0000%
+release=1.0.2 | classi buggy=0 | classi non-buggy=1273 | totale classi=1273 | percentuale buggy=0.0000%
+release=0.9.7 | classi buggy=0 | classi non-buggy=607 | totale classi=607 | percentuale buggy=0.0000%
+release=0.10.2 | classi buggy=0 | classi non-buggy=807 | totale classi=807 | percentuale buggy=0.0000%

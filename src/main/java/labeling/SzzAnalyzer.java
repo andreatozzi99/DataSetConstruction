@@ -13,9 +13,11 @@ import org.eclipse.jgit.util.io.DisabledOutputStream;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.time.ZoneId;
 
 import static manager.javaClassScannerManager.JavaClassScanner.isJavaProductionFile;
 
@@ -52,15 +54,63 @@ public final class SzzAnalyzer {
     public Map<String, Set<RevCommit>> findInducingCommits(
             RevCommit fixingCommit) throws Exception {
 
+        return analyseFixingCommit(fixingCommit).inducingCommitsByClass();
+    }
+
+    /**
+     * Variante conservata per i check: delega al metodo che include i source
+     * path storici, cosi' il report puo' mostrare esattamente l'evidenza usata
+     * anche dal resolver del dataset.
+     */
+    public SzzDiagnosticResult analyseFixingCommitForDiagnostics(
+            RevCommit fixingCommit) throws Exception {
+
+        return analyseFixingCommitWithSourcePaths(fixingCommit);
+    }
+
+    /**
+     * Esegue SZZ mantenendo anche i source path restituiti dal blame con
+     * rename-following. DatasetBuilder usa questa evidenza per il resolver
+     * storico: non basta infatti che l'intervallo Jira includa una release,
+     * la classe deve anche appartenere alla sua ancestry Git.
+     */
+    public SzzDiagnosticResult analyseFixingCommitWithSourcePaths(
+            RevCommit fixingCommit) throws Exception {
+
+        return analyseFixingCommit(fixingCommit, true);
+    }
+
+    /**
+     * Variante diagnostica di SZZ. Mantiene i contatori necessari a capire
+     * perche' un fixing commit genera, oppure non genera, commit inducing.
+     */
+    public SzzDiagnosticResult analyseFixingCommit(
+            RevCommit fixingCommit) throws Exception {
+
+        return analyseFixingCommit(fixingCommit, false);
+    }
+
+    private SzzDiagnosticResult analyseFixingCommit(
+            RevCommit fixingCommit,
+            boolean followFileRenames) throws Exception {
+
         Map<String, Set<RevCommit>> result =
                 new LinkedHashMap<>();
+
+        int changedFiles = 0;
+        int productionJavaFiles = 0;
+        int edits = 0;
+        int ignoredInsertEdits = 0;
+        int analysedParentLines = 0;
+        List<SzzLineDiagnostic> analysedLines = new ArrayList<>();
 
         /*
          * Un commit senza parent non può essere analizzato
          * con SZZ perché non esiste una versione precedente.
          */
         if (fixingCommit.getParentCount() == 0) {
-            return result;
+            return new SzzDiagnosticResult(result, changedFiles, productionJavaFiles,
+                    edits, ignoredInsertEdits, analysedParentLines, analysedLines);
         }
 
         try (RevWalk walk =
@@ -89,6 +139,8 @@ public final class SzzAnalyzer {
 
             for (DiffEntry entry : entries) {
 
+                changedFiles++;
+
                 String oldPath =
                         entry.getOldPath();
 
@@ -99,6 +151,8 @@ public final class SzzAnalyzer {
                 if (!isJavaProductionFile(oldPath)) {
                     continue;
                 }
+
+                productionJavaFiles++;
 
                 /*
                  * Un file appena aggiunto dal fixing commit
@@ -111,14 +165,16 @@ public final class SzzAnalyzer {
                     continue;
                 }
 
-                List<Edit> edits =
+                List<Edit> fileEdits =
                         diff
                                 .toFileHeader(entry)
                                 .toEditList();
 
-                if (edits.isEmpty()) {
+                if (fileEdits.isEmpty()) {
                     continue;
                 }
+
+                edits += fileEdits.size();
 
                 /*
                  * Il blame deve essere eseguito sul parent
@@ -128,13 +184,14 @@ public final class SzzAnalyzer {
                 BlameResult blame =
                         createBlame(
                                 parent,
-                                oldPath);
+                                oldPath,
+                                followFileRenames);
 
                 if (blame == null) {
                     continue;
                 }
 
-                for (Edit edit : edits) {
+                for (Edit edit : fileEdits) {
 
                     /*
                      * SZZ considera le righe presenti nella
@@ -147,19 +204,25 @@ public final class SzzAnalyzer {
                     if (edit.getType()
                             == Edit.Type.INSERT) {
 
+                        ignoredInsertEdits++;
+
                         continue;
                     }
+
+                    analysedParentLines += edit.getEndA() - edit.getBeginA();
 
                     analyseChangedLines(
                             oldPath,
                             edit,
                             blame,
-                            result);
+                            result,
+                            analysedLines);
                 }
             }
         }
 
-        return result;
+        return new SzzDiagnosticResult(result, changedFiles, productionJavaFiles,
+                edits, ignoredInsertEdits, analysedParentLines, analysedLines);
     }
 
     /**
@@ -168,7 +231,8 @@ public final class SzzAnalyzer {
      */
     private BlameResult createBlame(
             RevCommit parent,
-            String path) throws Exception {
+            String path,
+            boolean followFileRenames) throws Exception {
 
         BlameCommand blameCommand =
                 new BlameCommand(repository);
@@ -178,6 +242,12 @@ public final class SzzAnalyzer {
 
         blameCommand.setFilePath(
                 path);
+
+        // Il source path storico viene raccolto per il resolver del labeling.
+        // Non assegna da solo una label: DatasetBuilder controlla comunque
+        // ancestry, presenza nella release e unicita' del possibile mapping.
+        blameCommand.setFollowFileRenames(
+                followFileRenames);
 
         return blameCommand.call();
     }
@@ -190,7 +260,8 @@ public final class SzzAnalyzer {
             String classPath,
             Edit edit,
             BlameResult blame,
-            Map<String, Set<RevCommit>> result) {
+            Map<String, Set<RevCommit>> result,
+            List<SzzLineDiagnostic> analysedLines) {
 
         for (int line =
              edit.getBeginA();
@@ -199,6 +270,17 @@ public final class SzzAnalyzer {
 
             RevCommit inducingCommit =
                     blame.getSourceCommit(line);
+
+            // JGit usa indici zero-based; nel report mostriamo il numero di
+            // riga che si vede normalmente in un editor (quindi +1).
+            analysedLines.add(new SzzLineDiagnostic(
+                    classPath,
+                    line + 1,
+                    edit.getType().name(),
+                    inducingCommit == null ? "<nessun commit>" : inducingCommit.getName(),
+                    inducingCommit == null ? null : inducingCommit.getCommitterIdent().getWhen().toInstant()
+                            .atZone(ZoneId.systemDefault()).toLocalDate(),
+                    blame.getSourcePath(line)));
 
             if (inducingCommit == null) {
                 continue;

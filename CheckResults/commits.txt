@@ -1,0 +1,74 @@
+Risultato salvato in: C:\Users\andre\Desktop\ISW2\DataSetConstruction\CheckResults\commits.txt
+Comando: commits | avvio: 2026-09-28T10:09:01.891391800
+
+============================================================
+COMMIT MANAGER - FIXING COMMIT E CLASSI
+============================================================
+[OK] Ticket analizzati: 1193
+[OK] Ticket con fixing commit: 1058
+[WARN] Ticket senza fixing commit: 135
+[WARN] Ticket esclusi dal labeling per assenza fixing commit: 135
+Esempi ticket senza fixing commit:
+  STORM-4149
+  STORM-4148
+  STORM-4077
+  STORM-4052
+  STORM-4037
+  STORM-3956
+  STORM-3940
+  STORM-3924
+  STORM-3876
+  STORM-3816
+[OK] Associazioni ticket -> fixing commit: 2636 | media=2.2096 | massimo=29
+  Ticket con massimo: STORM-297 -> 29
+[WARN] Commit associato a piu ticket: 4ac1154e93bf5c99251b1aeffae679459af47325 -> [STORM-2621, STORM-2557]
+[WARN] Commit associato a piu ticket: fee498d003385fe48c2e38e8707ba35f8bece77a -> [STORM-2534, STORM-2533]
+[WARN] Commit associato a piu ticket: 1850dd53bd286307a2422e1fcdb07fada9635fdb -> [STORM-2457, STORM-2454]
+[WARN] Commit associato a piu ticket: cc590a263a42e0c624efcc8bcb8d0729f14b7e27 -> [STORM-2403, STORM-2387]
+[WARN] Commit associato a piu ticket: b705d861b925e0a8e486449f01c594150021aae7 -> [STORM-2338, STORM-2335, STORM-2324, STORM-2321, STORM-2197]
+[WARN] Commit associato a piu ticket: bf5373d879616e44dbde38d2720e80e52c76318a -> [STORM-2305, STORM-2279]
+[WARN] Commit associato a piu ticket: 00fed518d14b485e2a9e9cdd91ade3cc9d68dc8d -> [STORM-2246, STORM-1906, STORM-1841]
+[WARN] Commit associato a piu ticket: c9f9348e3de0917020a8c903f4c9d026b7dc6204 -> [STORM-2228, STORM-1997]
+[WARN] Commit associato a piu ticket: 44068c4191bf0890e81a5612fc989ba984d0a971 -> [STORM-2022, STORM-2021, STORM-2020]
+[WARN] Commit associato a piu ticket: b49c60bfb0723fd08f7defd88ec06b8daba8c827 -> [STORM-2022, STORM-2021, STORM-2020]
+[WARN] Commit associato a piu ticket: cb05b85908626394361863026e187b108beca5ce -> [STORM-1987, STORM-1849]
+[WARN] Commit associato a piu ticket: 90eeeee61c8ffa04a5b564ec6dab71161a153436 -> [STORM-1977, STORM-1976]
+[WARN] Commit associato a piu ticket: 12be4653228d4a2e13132c9090fed828c5a1afee -> [STORM-1977, STORM-1976]
+[WARN] Commit associato a piu ticket: 955b44552e7351ac0171b661b8aa5136a158e05c -> [STORM-1666, STORM-1665, STORM-1663]
+[WARN] Commit associato a piu ticket: 3ef91b0c2d9bba94e4bce8da9d55b4357f7697eb -> [STORM-1666, STORM-1665, STORM-1663]
+[WARN] Commit associato a piu ticket: f03b8bec105e88282211bf3e7dd4be4aeed484d8 -> [STORM-1636, STORM-1631]
+[WARN] Commit associato a piu ticket: e6a7eefde58a086d1f6ff300ef5c1541593daa6d -> [STORM-1544, STORM-1534]
+[WARN] Commit associato a piu ticket: 65a378492e011c27437c98c1eb947a8fdb80df38 -> [STORM-1534, STORM-1533]
+[WARN] Commit associato a piu ticket: 17732a36f68ccd0db5df5cd18194c4201abd563c -> [STORM-1499, STORM-1449]
+[WARN] Commit associato a piu ticket: 1eca8a3398679dce7675e72d91527ac05335bd54 -> [STORM-1499, STORM-1220]
+[WARN] Commit associato a piu ticket: 32258ebe1fb98908a985757702ddd41a5d3d0abc -> [STORM-1486, STORM-1220]
+[WARN] Commit associato a piu ticket: 0cdd7e83c893e2e550256e6daeea36c5a7379002 -> [STORM-1042, STORM-1012, STORM-967, STORM-922]
+[WARN] Commit associato a piu ticket: b3f0df41dee39999d4e68494fec266c35000d9c5 -> [STORM-839, STORM-763]
+[WARN] Commit associato a piu ticket: 4a3ddc688a5a0d584a6858168241083db23add15 -> [STORM-839, STORM-763]
+[WARN] Commit associato a piu ticket: b1411aa63383801913cb1340a8b51c5bb46db0ba -> [STORM-839, STORM-763]
+[WARN] Commit associato a piu ticket: 2b41f60e7feb3703eac32d99f7235a3be83a6190 -> [STORM-773, STORM-772]
+[WARN] Commit associato a piu ticket: c7575a2f7d0a2b4b0c985516b9d7cca2f8376e2a -> [STORM-773, STORM-772]
+[WARN] Commit associato a piu ticket: 933972abb47aa9b4ad87bc92d3ad7f79d21c9aee -> [STORM-773, STORM-772]
+[WARN] Commit associato a piu ticket: 002aae294a7070cdc76ea025eb4d8a89e766527b -> [STORM-476, STORM-424]
+[WARN] Commit associato a piu ticket: 2818698c6f687e3c1565a5f29daee1551482ba8d -> [STORM-442, STORM-422]
+[WARN] Commit associato a piu ticket: 589463411046c2ed6694c6d4ed85510b064ab8eb -> [STORM-322, STORM-248]
+[WARN] Commit associato a piu ticket: 49688fd5856e81d947255aca9cca4252d8243945 -> [STORM-322, STORM-248]
+[WARN] Commit associato a piu ticket: b2f8eb651d3e8dbd7939aae126d803da6b948663 -> [STORM-322, STORM-248]
+[WARN] Commit associato a piu ticket: fa3802afd1053b2d0494997387bfb8b579bf9489 -> [STORM-264, STORM-254]
+Esempi commit:
+  STORM-4154 | af4699946b1d2f599e5e08b5d3005aff0ee74a79 | Tue Jan 14 17:50:04 CET 2025 | STORM-4154 - fix: Nimbus downtime during topology deployment (#3833)
+  STORM-4106 | 6aee95d4fc738b6b6a2dd2295b375b04215c97d6 | Sat Nov 09 22:04:04 CET 2024 | STORM-4106 Fix Storm.ps1 stdout/stderr feedback in Powershell ISE
+  STORM-4104 | e3690f14dcc20e4659ccb7c1a8443c33a34cd69d | Thu Nov 07 23:05:21 CET 2024 | STORM-4104 Fix Pacemaker server stability issues
+  STORM-4085 | 2f6732c26c6fc9375389861798337b1e3ddb4e38 | Wed Oct 09 09:26:44 CEST 2024 | STORM-4085 - Ensure that DownloadOrUpdate exception is caught (#3704)
+  STORM-4069 | 088c0ddf800aa10a96c4edec603cb2425d04bf8b | Fri Aug 09 19:52:14 CEST 2024 | STORM-4069 - java.lang.ClassCastException for Trident-based Topology
+  STORM-4060 | 19148e0957cf2d41e5077571a0c02dbbef95cfec | Mon Jun 24 15:32:44 CEST 2024 | Merge pull request #3642 from reiabreu/master
+  STORM-4057 | bd9c38a3007ab1c739da0a3b47d8397d8b02cc10 | Thu Jun 13 09:56:41 CEST 2024 | Merge pull request #3640 from steveclark72/check_userid
+  STORM-4055 | 14f09446f33cf163d784a05ff4e23ce6547d7ddb | Wed Sep 04 15:11:37 CEST 2024 | STORM-4055 Kafka Consumer ConcurrentModificationException fix (#3691)
+  STORM-4051 | d0f5be316ccd02c3c5555f1750537debcd383ae3 | Fri Apr 05 19:45:12 CEST 2024 | STORM-4051 - Scheduler needs to include acker memory for topology resources (#3633)
+  STORM-4025 | d03ba19ded80759ca444153e51dea0d92c94c599 | Thu Jan 25 11:27:41 CET 2024 | STORM-4025 - ClassCastException when changing log level in Storm UI
+
+============================================================
+CLASSI TOCCATE - CAMPIONE STORM-4154
+============================================================
+Fixing commit: 1 | file toccati=2 | Java production=1 | Java test esclusi=1
+  storm-server/src/main/java/org/apache/storm/daemon/nimbus/Nimbus.java

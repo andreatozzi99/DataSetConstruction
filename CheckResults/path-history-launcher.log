@@ -1,0 +1,115 @@
+Risultato salvato in: C:\Users\andre\Desktop\ISW2\DataSetConstruction\CheckResults\path-history.txt
+Comando: path-history | avvio: 2026-09-29T12:16:39.073631800
+
+============================================================
+PATH HISTORY - RENAME/MOVE DEI FILE SZZ
+============================================================
+
+Ticket=STORM-3052 | SZZ path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java
+Fixing commit=1117a37b01a1058897a34e11ff5156e465efb692 | parent usato come punto di partenza=1bd53a58e198efd2e43cc3bd5edfc6514816ebef
+Storia del file (dal parent del fix verso il passato; first-parent):
+  commit=4137328b75c06771f84414c3c2113e2d1c757c08 | old path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | new path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | tipo=SAME | similarity score=<non disponibile>
+  commit=b4e610c5f440d309bd2442eb80708e278e952819 | old path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | new path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | tipo=SAME | similarity score=<non disponibile>
+  commit=89b48d2a89874ab6656494fc7a9c27f861e50ba6 | old path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | new path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | tipo=SAME | similarity score=<non disponibile>
+  commit=cef450064fa20e2194ef3f51a21c8e6693a285e3 | old path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | new path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | tipo=SAME | similarity score=<non disponibile>
+  commit=a66c4a5effba66bf97e67dc55bfb79299ea02afe | old path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | new path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | tipo=SAME | similarity score=<non disponibile>
+  commit=4eb65075ad066da9f8bb25c47503a10546a30458 | old path=storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java | new path=storm-server/src/main/java/org/apache/storm/localizer/LocalizedResource.java | tipo=MOVE | similarity score=89
+  commit=023cebd062e002577e7a4ed38ef795060040f812 | old path=/dev/null | new path=storm-core/src/jvm/org/apache/storm/localizer/LocalizedResource.java | tipo=ADD | similarity score=<non disponibile>
+Presenza nelle 14 release training:
+  release=0.9.0.1 | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.1-incubating | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.2-incubating | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.3 | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.4 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.5 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.0 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.6 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.0 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.1 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.1 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.2 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.7 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.2 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+
+Ticket=STORM-3052 | SZZ path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java
+Fixing commit=1117a37b01a1058897a34e11ff5156e465efb692 | parent usato come punto di partenza=1bd53a58e198efd2e43cc3bd5edfc6514816ebef
+Storia del file (dal parent del fix verso il passato; first-parent):
+  commit=4137328b75c06771f84414c3c2113e2d1c757c08 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=0fdad2c0ff357c431454128dd937edf2876a5fb5 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=e8dd1f7e2df5e034a20573b89cb89e9f3529e373 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=becab7cc2de23bb7754a7bf438be2270101eecf0 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=445f439391f211ca064df818f752f3ee49e06f47 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=cef450064fa20e2194ef3f51a21c8e6693a285e3 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=a66c4a5effba66bf97e67dc55bfb79299ea02afe | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=70d8ba9d5832c1893351dcfd0e285d287f221794 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=c607d04828e73f8cc4bf32b4b872318b6b6e189d | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=5c05bb74cbef88dfd63ab212183c0494b9fcc985 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=2da6b81978407bf4765a194e1fd6c0502fa7c4ed | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=ec05019da42d492724ab3e2c3be3e1b1c6bbf299 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=4c9a864f337281a655c46e7f227b1ae043f8cc56 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=b57f1365da65243eb7729cd766dcb55b6cd70c1b | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=64e29f365c9b5d3e15b33f33ab64e200345333e4 | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=67c99bf7fcda65181b60c5f5e145b233ca4fe6eb | old path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=4eb65075ad066da9f8bb25c47503a10546a30458 | old path=/dev/null | new path=storm-server/src/main/java/org/apache/storm/utils/ServerUtils.java | tipo=ADD | similarity score=<non disponibile>
+Presenza nelle 14 release training:
+  release=0.9.0.1 | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.1-incubating | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.2-incubating | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.3 | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.4 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.5 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.0 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.6 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.0 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.1 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.1 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.2 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.7 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.2 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+
+Ticket=STORM-3132 | SZZ path=storm-client/src/jvm/org/apache/storm/tuple/Values.java
+Fixing commit=cf2f8734b32380b4e75c9936971864e87003d25b | parent usato come punto di partenza=8e8c65c666814685970d8791e2a9ba3a46ae1129
+Storia del file (dal parent del fix verso il passato; first-parent):
+  commit=e736c4b44e94723be4c1efc06e4e9d2e9bd0314a | old path=storm-client/src/jvm/org/apache/storm/tuple/Values.java | new path=storm-client/src/jvm/org/apache/storm/tuple/Values.java | tipo=SAME | similarity score=<non disponibile>
+  commit=4eb65075ad066da9f8bb25c47503a10546a30458 | old path=storm-core/src/jvm/org/apache/storm/tuple/Values.java | new path=storm-client/src/jvm/org/apache/storm/tuple/Values.java | tipo=MOVE | similarity score=100
+  commit=023cebd062e002577e7a4ed38ef795060040f812 | old path=/dev/null | new path=storm-core/src/jvm/org/apache/storm/tuple/Values.java | tipo=ADD | similarity score=<non disponibile>
+Presenza nelle 14 release training:
+  release=0.9.0.1 | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.1-incubating | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.2-incubating | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.3 | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.4 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.5 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.0 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.6 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.0 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.1 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.1 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.2 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.7 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.2 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+
+Ticket=STORM-2950 | SZZ path=storm-client/src/jvm/org/apache/storm/utils/TupleUtils.java
+Fixing commit=4721c361789214225ac0616a045b9d38ab7efe29 | parent usato come punto di partenza=d5581bbd6b45bee1ad2229cd914ca871c0266ec0
+Storia del file (dal parent del fix verso il passato; first-parent):
+  commit=4eb65075ad066da9f8bb25c47503a10546a30458 | old path=storm-core/src/jvm/org/apache/storm/utils/TupleUtils.java | new path=storm-client/src/jvm/org/apache/storm/utils/TupleUtils.java | tipo=MOVE | similarity score=100
+  commit=560ff86ee0a42246d82d6d33c284a3711a0ea60f | old path=storm-core/src/jvm/org/apache/storm/utils/TupleUtils.java | new path=storm-core/src/jvm/org/apache/storm/utils/TupleUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=a263787d08056afafa0ae777cdab9644bb1e29a4 | old path=storm-core/src/jvm/org/apache/storm/utils/TupleUtils.java | new path=storm-core/src/jvm/org/apache/storm/utils/TupleUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=d1d6dbea95c263086f0e3820e7acd5aed74a07f8 | old path=storm-core/src/jvm/org/apache/storm/utils/TupleUtils.java | new path=storm-core/src/jvm/org/apache/storm/utils/TupleUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=023cebd062e002577e7a4ed38ef795060040f812 | old path=storm-core/src/jvm/org/apache/storm/utils/TupleUtils.java | new path=storm-core/src/jvm/org/apache/storm/utils/TupleUtils.java | tipo=SAME | similarity score=<non disponibile>
+  commit=bf45b96e496551e9319eae26cde985965afea5cf | old path=/dev/null | new path=storm-core/src/jvm/org/apache/storm/utils/TupleUtils.java | tipo=ADD | similarity score=<non disponibile>
+Presenza nelle 14 release training:
+  release=0.9.0.1 | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.1-incubating | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.2-incubating | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.3 | historical path risolto=NOT_YET_EXISTING | stato=NOT_YET_EXISTING | file presente=false | scanner contiene quel path=false
+  release=0.9.4 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.5 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.0 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.6 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.0 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.1 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.1 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=1.0.2 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.9.7 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false
+  release=0.10.2 | historical path risolto=NOT_ON_TRACED_ANCESTRY | stato=NOT_ON_TRACED_ANCESTRY | file presente=false | scanner contiene quel path=false

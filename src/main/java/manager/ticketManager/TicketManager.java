@@ -13,6 +13,17 @@ import java.util.*;
 /** Recupera i ticket del progetto e applica i filtri in metodi separati e verificabili. */
 public final class TicketManager {
     private List<Ticket> tickets = List.of();
+
+    /** Restituisce solo il totale di una query JQL: utile ai report senza scaricare tutte le issue. */
+    public int countIssues(String jql) throws IOException, InterruptedException {
+        URI uri = URI.create(Config.JIRA.baseUrl() + "/search?jql="
+                + URLEncoder.encode(jql, StandardCharsets.UTF_8) + "&maxResults=0");
+        HttpResponse<String> response = HttpClient.newHttpClient().send(
+                HttpRequest.newBuilder(uri).header("Accept", "application/json").GET().build(),
+                HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+        if (response.statusCode() != 200) throw new IOException("Jira ha risposto HTTP " + response.statusCode());
+        return new JSONObject(response.body()).getInt("total");
+    }
     public List<Ticket> getTickets() throws IOException, InterruptedException {
         List<Ticket> result = new ArrayList<>();
         int start = 0, total;

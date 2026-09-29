@@ -200,8 +200,11 @@ public final class CommitManager {
                             repository,
                             releaseCommit);
 
+            // Questo e' l'intero storico raggiungibile dal tag della release:
+            // il ciclo successivo ne terra' soltanto i commit che modificano
+            // almeno un file Java di produzione.
             System.out.println(
-                    "Commit da analizzare: "
+                    "Commit Git raggiungibili fino alla release: "
                             + commits.size());
 
             for (RevCommit commit : commits) {
